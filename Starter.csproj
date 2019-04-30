@@ -37,6 +37,7 @@
     <PackageReference Include="Mars.Life.Simulations" Version="3.0.1-preview" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="model\DroughtLayer\DroughtLayer.csproj" />
     <ProjectReference Include="src-gen\SavannaTrees.csproj" />
   </ItemGroup>
 </Project>

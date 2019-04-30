@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starter", "..\Starter.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavannaTrees", "..\src-gen\SavannaTrees.csproj", "{4FF3BA91-2742-4974-B895-23AC9941FFAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroughtLayer", "DroughtLayer\DroughtLayer.csproj", "{D1789741-07FD-48B3-B5C7-60CCFBB397F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1789741-07FD-48B3-B5C7-60CCFBB397F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1789741-07FD-48B3-B5C7-60CCFBB397F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1789741-07FD-48B3-B5C7-60CCFBB397F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1789741-07FD-48B3-B5C7-60CCFBB397F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using Bushbuckridge.Agents.Collector;
 using Mars.Common.Logging;
 using Mars.Common.Logging.Enums;
 using Mars.Core.ModelContainer.Entities;
@@ -22,7 +23,7 @@ public static class Program
         description.AddLayer<Temperature>();
 
         description.AddLayer<SavannaLayer>();
-       // description.AddLayer<DroughtLayer>();
+        description.AddLayer<DroughtLayer>();
 
         description.AddAgent<Tree, SavannaLayer>();
         var stopwatch = Stopwatch.StartNew();
