@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starter", "..\Starter.csproj", "{1001A3AB-5262-49D8-801A-6B0DAB83CF8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SavannaTrees", "..\src-gen\SavannaTrees.csproj", "{4FF3BA91-2742-4974-B895-23AC9941FFAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1001A3AB-5262-49D8-801A-6B0DAB83CF8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1001A3AB-5262-49D8-801A-6B0DAB83CF8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1001A3AB-5262-49D8-801A-6B0DAB83CF8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1001A3AB-5262-49D8-801A-6B0DAB83CF8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF3BA91-2742-4974-B895-23AC9941FFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

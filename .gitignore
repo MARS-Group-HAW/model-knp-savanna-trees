@@ -1,0 +1,11 @@
+logs/
+obj/
+model/.idea/
+**/tmp
+**/bin
+**/Debug
+*.dll
+*.pdb
+*.log
+*.cache
+*.user
