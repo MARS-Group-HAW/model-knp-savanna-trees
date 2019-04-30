@@ -1,1 +1,2 @@
-dotnet run -sm src/config.json --project src-gen
+cd model/Starter
+dotnet run -sm ../../config.json --project Starter.csproj
