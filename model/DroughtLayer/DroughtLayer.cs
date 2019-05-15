@@ -42,7 +42,7 @@ namespace Bushbuckridge.Agents.Collector
             CurrentTick = currentStep;
         }
 
-        private bool IsDroughtSituationReached()
+        public bool IsDroughtSituationReached()
         {
             return precipitationWithinYear < 435;
         }

@@ -12,17 +12,17 @@
 	},
 	"layers": [{
 			"name": "Temperature",
-			"file": "model_input/RCP4.5_2010_2050_temp.zip"
+			"file": "../../model_input/RCP4.5_2010_2050_temp.zip"
 		},
 		{
 			"name": "Precipitation",
-			"file": "model_input/RCP4.5_2010_2050_pre.zip"
+			"file": "../../model_input/RCP4.5_2010_2050_pre.zip"
 		}
 	],
 	"agents": [{
 			"name": "Tree",
 			"count": 111,
-			"file": "model_input/tree_bushbuckridge_test_ha.csv",
+			"file": "../../model_input/tree_bushbuckridge_test_ha.csv",
 			"frequency": 1,
 			"outputFrequency": 365,
 			"individuals": [{

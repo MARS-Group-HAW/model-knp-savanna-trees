@@ -24,6 +24,7 @@ public static class Program
 
         description.AddLayer<SavannaLayer>();
         description.AddLayer<DroughtLayer>();
+        description.AddLayer<HerbivorePressureLayer>();
 
         description.AddAgent<Tree, SavannaLayer>();
         var stopwatch = Stopwatch.StartNew();
