@@ -71,7 +71,8 @@ namespace SavannaTrees {
 			_TreeEnvironment,
 			_Precipitation, 
 			_Temperature
-		, 	default(string), 
+		, 	default(bool), 
+			default(string), 
 			default(double), 
 			default(string)
 		, 	xcor, ycor, freq);

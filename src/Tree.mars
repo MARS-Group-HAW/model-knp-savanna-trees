@@ -15,14 +15,14 @@ enum DamageType { No Light Moderate Heavy Extreme }
 
 agent Tree on SavannaLayer {	
 	static var growthBoosterByClimate = 1.0;
+	static var SeedlingSurvivalRate : integer // percentage
 	
-	static var AN = "an" // Arkazie
-	static var CA = "ca" // Combretum apiculatun
-	static var SB = "sb" // Marula
-	static var TT = "tt" // generic
-	static var ALL_SPECIES = "ALL" // generic
+	static var AN = "an" 			// Arkazie
+	static var CA = "ca" 			// Combretum apiculatun
+	static var SB = "sb" 			// Marula
+	static var TT = "tt" 			// Generic tree
+	static var ALL_SPECIES = "ALL" 
 	
-	static var SeedlingSurvivalRate = 12 // per cent; for RPC8.5: 15
 	static var SeedlingsSpawnRatePerYear = 50
 	static var DaysPerYear = 365
 	static var DaysWithLeaves = 228
@@ -30,6 +30,7 @@ agent Tree on SavannaLayer {
 	static var PI : real = 3.14159265359
     static var EarthRadiusInMeters = 6378100.0;	
 	
+	external var IsScenario45not85 : bool
 	external observe var Species : string
 	external observe var StemDiameter : real
 	external observe var Raster : string
@@ -53,6 +54,14 @@ agent Tree on SavannaLayer {
 		Bark = 1.0
 		UpdateTreeAgeGroup
 		InitWoodMass
+		
+		if (IsScenario45not85) {
+			SeedlingSurvivalRate = 12
+			growthBoosterByClimate = 1.0
+		} else {
+			SeedlingSurvivalRate = 15
+			growthBoosterByClimate = 1.3
+		}
 	}
 	
 	passive Xcor()  {
@@ -148,14 +157,14 @@ agent Tree on SavannaLayer {
 	}
 	
 	passive SufferHerbivorePressure() {
-		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) { //and height < 1.5m
+		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) { //TODO and height < 1.5m
 			switch (Species) {
 			case AN: { ReduceStemDiameterBy(5) }
 			case CA: { ReduceStemDiameterBy(20) }
 			case SB: { ReduceStemDiameterBy(30) }
 			case TT: { ReduceStemDiameterBy(18) } 
 			}
-		}//TODO auch heribvore Pressure layer bauen (vgl. DroughtLayer)
+		}
 	}
 	
 	def ReduceStemDiameterBy(percent : real) {
@@ -200,6 +209,10 @@ agent Tree on SavannaLayer {
 			Juvenile
 		} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
 			Adult
+		}
+		
+		if(RandomPropabilitySmallenThan(50)) {
+			Die("DieForDaniel")//TODO delete
 		}
 				
 		UpdateWoodMass
@@ -429,7 +442,7 @@ agent Tree on SavannaLayer {
 	
 	def Die(reason : string) {
 		DyingReason = reason
-		//MyTreeAgeGroup = TreeAgeGroup.Death	
+		MyTreeAgeGroup = TreeAgeGroup.Death	
 		kill me
 	}
 		
