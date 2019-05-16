@@ -561,8 +561,8 @@ namespace SavannaTrees {
 					 i++){
 					 	{
 					 	SavannaTrees.Tree seed = new System.Func<SavannaTrees.Tree>(() => {
-					 	var _target303_7004 = GetRelativePosition(base.Position[0],base.Position[1],_Random.Next(50),_Random.Next(360));
-					 	return _SavannaLayer._SpawnTree(_target303_7004.Item1, _target303_7004.Item2);}).Invoke();
+					 	var _target299_6920 = GetRelativePosition(base.Position[0],base.Position[1],_Random.Next(50),_Random.Next(360));
+					 	return _SavannaLayer._SpawnTree(_target299_6920.Item1, _target299_6920.Item2);}).Invoke();
 					 	seed.SetSpecies(Species);
 					 	seed.SetTreeAgeGroup(TreeAgeGroup.Seed);
 					 	seed.SetRaster(Raster)
@@ -591,47 +591,47 @@ namespace SavannaTrees {
 		public void GrowJuvenile() 
 		{
 			{
-			string _switch331_7557 = (Species);
-			bool _matched_331_7557 = false;
-			bool _fallthrough_331_7557 = false;
-			if(!_matched_331_7557 || _fallthrough_331_7557) {
-				if(Equals(_switch331_7557, AN)) {
-					_matched_331_7557 = true;
+			string _switch327_7473 = (Species);
+			bool _matched_327_7473 = false;
+			bool _fallthrough_327_7473 = false;
+			if(!_matched_327_7473 || _fallthrough_327_7473) {
+				if(Equals(_switch327_7473, AN)) {
+					_matched_327_7473 = true;
 					{
 					GrowJuvenileAn()
 					;}
 				} else {
-					_fallthrough_331_7557 = false;
+					_fallthrough_327_7473 = false;
 				}
 			}
-			if(!_matched_331_7557 || _fallthrough_331_7557) {
-				if(Equals(_switch331_7557, CA)) {
-					_matched_331_7557 = true;
+			if(!_matched_327_7473 || _fallthrough_327_7473) {
+				if(Equals(_switch327_7473, CA)) {
+					_matched_327_7473 = true;
 					{
 					GrowJuvenileCa()
 					;}
 				} else {
-					_fallthrough_331_7557 = false;
+					_fallthrough_327_7473 = false;
 				}
 			}
-			if(!_matched_331_7557 || _fallthrough_331_7557) {
-				if(Equals(_switch331_7557, SB)) {
-					_matched_331_7557 = true;
+			if(!_matched_327_7473 || _fallthrough_327_7473) {
+				if(Equals(_switch327_7473, SB)) {
+					_matched_327_7473 = true;
 					{
 					GrowJuvenileSb()
 					;}
 				} else {
-					_fallthrough_331_7557 = false;
+					_fallthrough_327_7473 = false;
 				}
 			}
-			if(!_matched_331_7557 || _fallthrough_331_7557) {
-				if(Equals(_switch331_7557, TT)) {
-					_matched_331_7557 = true;
+			if(!_matched_327_7473 || _fallthrough_327_7473) {
+				if(Equals(_switch327_7473, TT)) {
+					_matched_327_7473 = true;
 					{
 					GrowJuvenileTt()
 					;}
 				} else {
-					_fallthrough_331_7557 = false;
+					_fallthrough_327_7473 = false;
 				}
 			}
 			;}
@@ -673,47 +673,47 @@ namespace SavannaTrees {
 		public void GrowAdult(double reduceFactor) 
 		{
 			{
-			string _switch356_8284 = (Species);
-			bool _matched_356_8284 = false;
-			bool _fallthrough_356_8284 = false;
-			if(!_matched_356_8284 || _fallthrough_356_8284) {
-				if(Equals(_switch356_8284, AN)) {
-					_matched_356_8284 = true;
+			string _switch352_8200 = (Species);
+			bool _matched_352_8200 = false;
+			bool _fallthrough_352_8200 = false;
+			if(!_matched_352_8200 || _fallthrough_352_8200) {
+				if(Equals(_switch352_8200, AN)) {
+					_matched_352_8200 = true;
 					{
 					GrowAdultAn(reduceFactor)
 					;}
 				} else {
-					_fallthrough_356_8284 = false;
+					_fallthrough_352_8200 = false;
 				}
 			}
-			if(!_matched_356_8284 || _fallthrough_356_8284) {
-				if(Equals(_switch356_8284, CA)) {
-					_matched_356_8284 = true;
+			if(!_matched_352_8200 || _fallthrough_352_8200) {
+				if(Equals(_switch352_8200, CA)) {
+					_matched_352_8200 = true;
 					{
 					GrowAdultCa(reduceFactor)
 					;}
 				} else {
-					_fallthrough_356_8284 = false;
+					_fallthrough_352_8200 = false;
 				}
 			}
-			if(!_matched_356_8284 || _fallthrough_356_8284) {
-				if(Equals(_switch356_8284, SB)) {
-					_matched_356_8284 = true;
+			if(!_matched_352_8200 || _fallthrough_352_8200) {
+				if(Equals(_switch352_8200, SB)) {
+					_matched_352_8200 = true;
 					{
 					GrowAdultSb(reduceFactor)
 					;}
 				} else {
-					_fallthrough_356_8284 = false;
+					_fallthrough_352_8200 = false;
 				}
 			}
-			if(!_matched_356_8284 || _fallthrough_356_8284) {
-				if(Equals(_switch356_8284, TT)) {
-					_matched_356_8284 = true;
+			if(!_matched_352_8200 || _fallthrough_352_8200) {
+				if(Equals(_switch352_8200, TT)) {
+					_matched_352_8200 = true;
 					{
 					GrowAdultTt(reduceFactor)
 					;}
 				} else {
-					_fallthrough_356_8284 = false;
+					_fallthrough_352_8200 = false;
 				}
 			}
 			;}
@@ -772,7 +772,7 @@ namespace SavannaTrees {
 		{
 			{
 			SavannaTrees.Tree tree = new Func<SavannaTrees.Tree>(() => {
-			Func<SavannaTrees.Tree, bool> _predicate402_9932 = new Func<SavannaTrees.Tree,bool>((SavannaTrees.Tree x) =>  {
+			Func<SavannaTrees.Tree, bool> _predicate398_9848 = new Func<SavannaTrees.Tree,bool>((SavannaTrees.Tree x) =>  {
 					{
 					return x.IsTreeAgeGroup(treeAgeGroup)
 					 && x.IsSpecies(species)
@@ -780,9 +780,10 @@ namespace SavannaTrees {
 					;
 					return default(bool);;
 			});
-			const int _range402_9932 = -1;
-			var _source402_9932 = this;
-			return _SavannaLayer._TreeEnvironment.Explore(_source402_9932, _range402_9932, 1, _predicate402_9932)?.FirstOrDefault();}).Invoke();
+			const int _range398_9848 = -1;
+			var _source398_9848 = this;
+			return _SavannaLayer._TreeEnvironment.Explore(
+			_source398_9848, _range398_9848, 1, _predicate398_9848)?.FirstOrDefault();}).Invoke();
 			return !Equals(tree, null) && DistanceTo(tree) < minDistance
 			;}
 			return default(bool);;
@@ -820,51 +821,51 @@ namespace SavannaTrees {
 							return 0
 							;}
 					;} ;
-			string _switch422_10745 = (Species);
-			bool _matched_422_10745 = false;
-			bool _fallthrough_422_10745 = false;
-			if(!_matched_422_10745 || _fallthrough_422_10745) {
-				if(Equals(_switch422_10745, AN)) {
-					_matched_422_10745 = true;
+			string _switch418_10661 = (Species);
+			bool _matched_418_10661 = false;
+			bool _fallthrough_418_10661 = false;
+			if(!_matched_418_10661 || _fallthrough_418_10661) {
+				if(Equals(_switch418_10661, AN)) {
+					_matched_418_10661 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, (-3.55 + 3.060 * Mars.Components.Common.Math.Log(StemDiameter)
 					)) / 0.6
 					;}
 				} else {
-					_fallthrough_422_10745 = false;
+					_fallthrough_418_10661 = false;
 				}
 			}
-			if(!_matched_422_10745 || _fallthrough_422_10745) {
-				if(Equals(_switch422_10745, CA)) {
-					_matched_422_10745 = true;
+			if(!_matched_418_10661 || _fallthrough_418_10661) {
+				if(Equals(_switch418_10661, CA)) {
+					_matched_418_10661 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, (-3.27 + 2.800 * Mars.Components.Common.Math.Log(StemDiameter)
 					)) / 0.6
 					;}
 				} else {
-					_fallthrough_422_10745 = false;
+					_fallthrough_418_10661 = false;
 				}
 			}
-			if(!_matched_422_10745 || _fallthrough_422_10745) {
-				if(Equals(_switch422_10745, SB)) {
-					_matched_422_10745 = true;
+			if(!_matched_418_10661 || _fallthrough_418_10661) {
+				if(Equals(_switch418_10661, SB)) {
+					_matched_418_10661 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, (-3.35 + 2.620 * Mars.Components.Common.Math.Log(StemDiameter)
 					)) / 0.6
 					;}
 				} else {
-					_fallthrough_422_10745 = false;
+					_fallthrough_418_10661 = false;
 				}
 			}
-			if(!_matched_422_10745 || _fallthrough_422_10745) {
-				if(Equals(_switch422_10745, TT)) {
-					_matched_422_10745 = true;
+			if(!_matched_418_10661 || _fallthrough_418_10661) {
+				if(Equals(_switch418_10661, TT)) {
+					_matched_418_10661 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, (-3.39 + 2.827 * Mars.Components.Common.Math.Log(StemDiameter)
 					)) / 0.6
 					;}
 				} else {
-					_fallthrough_422_10745 = false;
+					_fallthrough_418_10661 = false;
 				}
 			}
 			;}
@@ -874,51 +875,51 @@ namespace SavannaTrees {
 		public double CalculateDiameterByWoodMass() 
 		{
 			{
-			string _switch431_11127 = (Species);
-			bool _matched_431_11127 = false;
-			bool _fallthrough_431_11127 = false;
-			if(!_matched_431_11127 || _fallthrough_431_11127) {
-				if(Equals(_switch431_11127, AN)) {
-					_matched_431_11127 = true;
+			string _switch427_11043 = (Species);
+			bool _matched_427_11043 = false;
+			bool _fallthrough_427_11043 = false;
+			if(!_matched_427_11043 || _fallthrough_427_11043) {
+				if(Equals(_switch427_11043, AN)) {
+					_matched_427_11043 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, ((3.55 + Mars.Components.Common.Math.Log(LivingWoodMass * 0.6)
 					) / 3.060))
 					;}
 				} else {
-					_fallthrough_431_11127 = false;
+					_fallthrough_427_11043 = false;
 				}
 			}
-			if(!_matched_431_11127 || _fallthrough_431_11127) {
-				if(Equals(_switch431_11127, CA)) {
-					_matched_431_11127 = true;
+			if(!_matched_427_11043 || _fallthrough_427_11043) {
+				if(Equals(_switch427_11043, CA)) {
+					_matched_427_11043 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, ((3.27 + Mars.Components.Common.Math.Log(LivingWoodMass * 0.6)
 					) / 2.800))
 					;}
 				} else {
-					_fallthrough_431_11127 = false;
+					_fallthrough_427_11043 = false;
 				}
 			}
-			if(!_matched_431_11127 || _fallthrough_431_11127) {
-				if(Equals(_switch431_11127, SB)) {
-					_matched_431_11127 = true;
+			if(!_matched_427_11043 || _fallthrough_427_11043) {
+				if(Equals(_switch427_11043, SB)) {
+					_matched_427_11043 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, ((3.35 + Mars.Components.Common.Math.Log(LivingWoodMass * 0.6)
 					) / 2.620))
 					;}
 				} else {
-					_fallthrough_431_11127 = false;
+					_fallthrough_427_11043 = false;
 				}
 			}
-			if(!_matched_431_11127 || _fallthrough_431_11127) {
-				if(Equals(_switch431_11127, TT)) {
-					_matched_431_11127 = true;
+			if(!_matched_427_11043 || _fallthrough_427_11043) {
+				if(Equals(_switch427_11043, TT)) {
+					_matched_427_11043 = true;
 					{
 					return Mars.Components.Common.Math.Pow(E, ((3.39 + Mars.Components.Common.Math.Log(LivingWoodMass * 0.6)
 					) / 2.827))
 					;}
 				} else {
-					_fallthrough_431_11127 = false;
+					_fallthrough_427_11043 = false;
 				}
 			}
 			;}
@@ -939,9 +940,9 @@ namespace SavannaTrees {
 			DyingReason = reason;
 			MyTreeAgeGroup = TreeAgeGroup.Death;
 			new System.Action(() => {
-				var _target446_11640 = this;
-				if (_target446_11640 != null) {
-					_SavannaLayer._Unregister(_SavannaLayer, _target446_11640, _target446_11640._executionFrequency);
+				var _target442_11556 = this;
+				if (_target442_11556 != null) {
+					_SavannaLayer._KillTree(_target442_11556, _target442_11556._executionFrequency);
 				}
 			}).Invoke()
 			;}
@@ -1325,11 +1326,6 @@ namespace SavannaTrees {
 														;}
 										;}
 						;};
-			if(RandomPropabilitySmallenThan(50)) {
-							{
-							Die("DieForDaniel")
-							;}
-					;} ;
 			UpdateWoodMass();
 			if(Equals(Mars.Components.Common.Time.Month((int) Mars.Core.SimulationManager.Entities.SimulationClock.CurrentStep)
 			, 3) && Equals(Mars.Components.Common.Time.Day((int) Mars.Core.SimulationManager.Entities.SimulationClock.CurrentStep)

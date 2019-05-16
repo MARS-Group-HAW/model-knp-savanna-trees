@@ -54,6 +54,7 @@ namespace SavannaTrees {
 				var _feature = new NetTopologySuite.Geometries.GeometryCollection(geometries.ToArray()).Envelope;
 				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_feature.Coordinates[1].Y, _feature.Coordinates[0].Y, _feature.Coordinates[0].X, _feature.Coordinates[2].X, _cellSizeMeters ?? 100);
 			}
+			
 			_TreeAgents = Mars.Components.Services.AgentManager.SpawnAgents<Tree>(
 			initData.AgentInitConfigs.First(config => config.Type == typeof(Tree)),
 			regHandle, unregHandle, 
@@ -78,6 +79,15 @@ namespace SavannaTrees {
 		, 	xcor, ycor, freq);
 			_TreeAgents.Add(id, agent);
 			return agent;
+		}
+		
+		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+		public void _KillTree(SavannaTrees.Tree target, int executionFrequency = 1)
+		{
+			target._isAlive = false;
+			_TreeEnvironment.Remove(target);
+			_Unregister(this, target, target._executionFrequency);
+			_TreeAgents.Remove(target.ID);
 		}
 	}
 }

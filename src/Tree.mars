@@ -210,10 +210,6 @@ agent Tree on SavannaLayer {
 		} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
 			Adult
 		}
-		
-		if(RandomPropabilitySmallenThan(50)) {
-			Die("DieForDaniel")//TODO delete
-		}
 				
 		UpdateWoodMass
 		
