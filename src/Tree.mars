@@ -40,9 +40,9 @@ agent Tree on SavannaLayer {
 	observe var DeadWoodMass : real
 	observe var Bark : real	// 1.0 = 100%
 	observe var DyingReason : string
+	observe var MyDamageType : DamageType
 	
 	var HasLeaves : bool
-	var MyDamageType : DamageType
 		
 	var FirstTickAsSeedling : real
 	
