@@ -13,10 +13,13 @@ namespace Bushbuckridge.Agents.Collector
     /// </summary>
     public class DroughtLayer : ISteppedActiveLayer
     {
+        private int _dayOfTick;
         private readonly SavannaLayer _savannaLayer;
         private readonly Precipitation _precipitation;
         private double precipitationWithinYear;
         private double daysSinceLastDroughtTest;
+
+        public bool HasDrought { get; private set; }
 
         private long CurrentTick { get; set; }
 
@@ -24,6 +27,7 @@ namespace Bushbuckridge.Agents.Collector
         {
             _savannaLayer = savannaLayer;
             _precipitation = precipitation;
+            Console.WriteLine(HasDrought);
         }
 
         public bool InitLayer(TInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -42,31 +46,44 @@ namespace Bushbuckridge.Agents.Collector
             CurrentTick = currentStep;
         }
 
-        public bool IsDroughtSituationReached()
-        {
-            return precipitationWithinYear < 435;
-        }
-
         public void Tick()
         {
-            if (SimulationClock.CurrentTimePoint.Value.Month == 9 && SimulationClock.CurrentTimePoint.Value.Day == 1 &&
-                daysSinceLastDroughtTest >= 365)
+            if (_dayOfTick == null || !_dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day))
             {
-                if (IsDroughtSituationReached())
+                _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
+                precipitationWithinYear += _precipitation.GetNumberValue(Territory.TOP_LAT, Territory.LEFT_LONG);
+                daysSinceLastDroughtTest++;
+
+                if (IsNextYearTick())
                 {
-                    // fire drought event
-                    foreach (var tree in _savannaLayer._TreeAgents.Values)
+                    Console.WriteLine(SimulationClock.CurrentTimePoint.Value.Year);
+                    HasDrought = IsDroughtSituationReached();
+                    if (HasDrought)
                     {
-                        tree.SufferDrought();
+                        Console.WriteLine("DROUGHT!!!");
+                        // fire drought event
+                        foreach (var tree in _savannaLayer._TreeAgents.Values)
+                        {
+                            tree.SufferDrought();
+                        }
                     }
+
+                    precipitationWithinYear = 0;
+                    daysSinceLastDroughtTest = 0;
                 }
-
-                precipitationWithinYear = 0;
-                daysSinceLastDroughtTest = 0;
             }
+        }
 
-            precipitationWithinYear += _precipitation.GetNumberValue(Territory.TOP_LAT, Territory.LEFT_LONG);
-            daysSinceLastDroughtTest++;
+        private bool IsNextYearTick()
+        {
+            return SimulationClock.CurrentTimePoint.Value.Month == 9 &&
+                   SimulationClock.CurrentTimePoint.Value.Day == 1 &&
+                   daysSinceLastDroughtTest >= 365;
+        }
+
+        private bool IsDroughtSituationReached()
+        {
+            return precipitationWithinYear < 435;
         }
 
         public void PreTick()

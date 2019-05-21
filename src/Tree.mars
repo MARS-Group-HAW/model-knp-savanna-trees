@@ -142,11 +142,15 @@ agent Tree on SavannaLayer {
 	
 	def CalculateDamageType(result : real) {
 		var quota = result / LivingWoodMass
-		if (quota > 0.9) {
+		if (quota > 0.8) {
 			return DamageType.Extreme
-		} else if (quota > 0.1) {
+		} else if (quota > 0.6) {
+			return DamageType.Heavy
+		} else if (quota > 0.3) {
 			return DamageType.Moderate
-		}
+		} else if (quota > 0.1) {
+			return DamageType.Light
+		} 
 		return DamageType.No
 	}
 	
@@ -221,13 +225,14 @@ agent Tree on SavannaLayer {
 	
 	def Seed() {	
 		if (HasPrecipitation) {		
-			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate + random(SeedlingSurvivalRate))) {
+			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate)) { //+ random(SeedlingSurvivalRate)
 				Die("RandomProbability") // 88% - 100% die eventually
 			} else if (IsPopulationDensityExceeded) {
 				Die("PopulationDensity")
+			} else {
+				FirstTickAsSeedling = simtime	
+				MyTreeAgeGroup = TreeAgeGroup.Seedling 
 			}
-			FirstTickAsSeedling = simtime	
-			MyTreeAgeGroup = TreeAgeGroup.Seedling 
 		} 	
 	}
 	
@@ -253,8 +258,8 @@ agent Tree on SavannaLayer {
 	var seedSurvivedFirst12Days : bool
 	
 	def IsDried() {
-		if (FirstTickAsSeedling + 12 < simtime) {
-			seedSurvivedFirst12Days = HasPrecipitation
+		if (FirstTickAsSeedling + 12 > simtime) {
+			seedSurvivedFirst12Days = HasPrecipitation or seedSurvivedFirst12Days
 			return false
 		} 
 		return not seedSurvivedFirst12Days
@@ -395,7 +400,7 @@ agent Tree on SavannaLayer {
 	}
 	
 	def IsTooCloseTo(treeAgeGroup : TreeAgeGroup, species : string, minDistance : real) {
-		var tree = nearest Tree where [x => return x.IsTreeAgeGroup(treeAgeGroup) and x.IsSpecies(species)] 
+		var tree = nearest Tree where [x => return x !== me and x.IsTreeAgeGroup(treeAgeGroup) and x.IsSpecies(species)] 
 		return tree !== nil and DistanceTo(tree)  < minDistance
 	}
 	
