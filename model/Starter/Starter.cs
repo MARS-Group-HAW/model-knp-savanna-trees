@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Bushbuckridge.Agents.Collector;
 using Mars.Common.Logging;
@@ -17,7 +18,8 @@ public static class Program
             LoggerFactory.SetLogLevel(LogLevel.Info);
             LoggerFactory.ActivateConsoleLogging();
         }
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        
         var description = new ModelDescription();
         description.AddLayer<Precipitation>();
         description.AddLayer<Temperature>();

@@ -6,11 +6,12 @@ using SavannaTrees;
 namespace Bushbuckridge.Agents.Collector
 {
     /// <summary>
-    /// Reduces the tree wood mass once a year
+    /// Reduces the tree wood mass once a year by herbivore influence
     /// </summary>
     public class HerbivorePressureLayer : ISteppedActiveLayer
     {
         private readonly SavannaLayer _savannaLayer;
+        private int _dayOfTick;
 
         private long CurrentTick { get; set; }
 
@@ -19,9 +20,34 @@ namespace Bushbuckridge.Agents.Collector
             _savannaLayer = savannaLayer;
         }
 
+        public void Tick()
+        {
+            if (_dayOfTick != null && _dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
+            _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
+ 
+            if (!IsNextYearTick()) return;
+            fireHerbivorePressureEvent();
+        }
+
+        private static bool IsNextYearTick()
+        {
+            return SimulationClock.CurrentTimePoint.Value.Day == SimulationClock.StartTimePoint.Value.Day &&
+                   SimulationClock.CurrentTimePoint.Value.Month == SimulationClock.StartTimePoint.Value.Month &&
+                   SimulationClock.CurrentTimePoint.Value.Year > SimulationClock.StartTimePoint.Value.Year;
+        }
+
+        private void fireHerbivorePressureEvent()
+        {
+            foreach (var tree in _savannaLayer._TreeAgents.Values)
+            {
+                tree.SufferHerbivorePressure();
+            }
+        }
+
         public bool InitLayer(TInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
         {
+            //do nothing
             return true;
         }
 
@@ -35,23 +61,14 @@ namespace Bushbuckridge.Agents.Collector
             CurrentTick = currentStep;
         }
 
-        public void Tick()
-        {
-            if (SimulationClock.CurrentTimePoint.Value.Month != 9 ||
-                SimulationClock.CurrentTimePoint.Value.Day != 1) return;
-            // fire herbivore pressure event
-            foreach (var tree in _savannaLayer._TreeAgents.Values)
-            {
-                tree.SufferHerbivorePressure();
-            }
-        }
-
         public void PreTick()
         {
+            //do nothing
         }
 
         public void PostTick()
         {
+            //do nothing
         }
     }
 }

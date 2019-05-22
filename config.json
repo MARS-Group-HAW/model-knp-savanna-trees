@@ -2,8 +2,8 @@
    "globals":{  
       "deltaT":1,
       "deltaTUnit":"days",
-      "startTime":"10/14/2010",
-      "endTime":"10/15/2020",
+      "startTime":"10/1/2010",
+      "endTime":"10/2/2020",
       "output":"csv",
       "options":{  
          "delimiter":",",
@@ -18,6 +18,15 @@
       {  
          "name":"Precipitation",
          "file":"../../model_input/RCP4.5_2010_2050_pre.zip"
+      },
+      {  
+         "name":"DroughtLayer",
+         "mapping":[  
+            {  
+               "parameter":"precipitationThreshold",
+               "value":10000
+            }
+         ]
       }
    ],
    "agents":[  
