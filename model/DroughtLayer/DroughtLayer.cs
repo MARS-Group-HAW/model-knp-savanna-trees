@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using Bushbuckridge.Config;
 using Mars.Core.SimulationManager.Entities;
 using Mars.Interfaces.Layer;
@@ -21,6 +22,7 @@ namespace Bushbuckridge.Agents.Collector
 
         private int _dayOfTick;
         private double _precipitationWithinYear;
+        private readonly Stopwatch _stopWatch;
 
         private long CurrentTick { get; set; }
 
@@ -29,16 +31,20 @@ namespace Bushbuckridge.Agents.Collector
             _savannaLayer = savannaLayer;
             _precipitation = precipitation;
             PrecipitationThreshold = precipitationThreshold;
+            _stopWatch = new Stopwatch();
+            _stopWatch.Restart();
         }
 
         public void Tick()
         {
-            if (_dayOfTick != null && _dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
+            if (_dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
             _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
             _precipitationWithinYear += _precipitation.GetNumberValue(Territory.TOP_LAT, Territory.LEFT_LONG);
 
             if (!IsNextYearTick()) return;
-            Console.WriteLine(SimulationClock.CurrentTimePoint.Value.Year);
+
+            Console.WriteLine(SimulationClock.CurrentTimePoint.Value.Year + " in " + _stopWatch.Elapsed.Minutes + "m " + _stopWatch.Elapsed.Seconds + "s with prec: "+_precipitationWithinYear);
+            _stopWatch.Restart();
 
             HasDrought = _precipitationWithinYear < PrecipitationThreshold;
             if (HasDrought)

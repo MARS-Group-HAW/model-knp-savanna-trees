@@ -9,6 +9,7 @@ public static class Program {
 		description.AddLayer<SavannaTrees.SavannaLayer>();
 		description.AddLayer<SavannaTrees.Precipitation>();
 		description.AddLayer<SavannaTrees.Temperature>();
+		description.AddAgent<SavannaTrees.Rafiki, SavannaTrees.SavannaLayer>();
 		description.AddAgent<SavannaTrees.Tree, SavannaTrees.SavannaLayer>();
 		var task = Mars.Core.SimulationStarter.SimulationStarter.Start(description, args);
 		var loopResults = task.Run();

@@ -41,6 +41,7 @@ agent Tree on SavannaLayer {
 	observe var Bark : real	// 1.0 = 100%
 	observe var DyingReason : string
 	observe var MyDamageType : DamageType
+	observe var InitializeYear : integer
 	
 	var HasLeaves : bool
 		
@@ -54,7 +55,7 @@ agent Tree on SavannaLayer {
 		Bark = 1.0
 		UpdateTreeAgeGroup
 		InitWoodMass
-		
+				
 		if (IsScenario45not85) {
 			SeedlingSurvivalRate = 12
 			growthBoosterByClimate = 1.0
@@ -62,11 +63,13 @@ agent Tree on SavannaLayer {
 			SeedlingSurvivalRate = 15
 			growthBoosterByClimate = 1.3
 		}
+		InitializeYear = Time::Year(simtime)
 	}
 	
 	passive Xcor()  {
 		return xcor
 	}
+	
 	passive Ycor()  {
 		return ycor
 	}
@@ -224,12 +227,15 @@ agent Tree on SavannaLayer {
 	}
 	
 	def Seed() {	
-		if (HasPrecipitation) {		
-			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate)) { //+ random(SeedlingSurvivalRate)
-				Die("RandomProbability") // 88% - 100% die eventually
-			} else if (IsPopulationDensityExceeded) {
+		if (HasPrecipitation) {					
+			var rafiki = nearest Rafiki 
+			rafiki.AccSeed()
+			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
+				Die("RandomProbability") 
+			} else if (IsPopulationDensityExceeded()) {
 				Die("PopulationDensity")
 			} else {
+			rafiki.GrowToSeedling()
 				FirstTickAsSeedling = simtime	
 				MyTreeAgeGroup = TreeAgeGroup.Seedling 
 			}
@@ -238,7 +244,7 @@ agent Tree on SavannaLayer {
 	
 	def Seedling() {	
 		if (IsFrozen) {
-			Die ("Frozen")
+			Die("Frozen")
 		} else if (IsDried) {
 			Die("Dried")
 		} else if (MyDamageType !== DamageType.No) {
@@ -301,9 +307,8 @@ agent Tree on SavannaLayer {
 	
 	def SpawnSeedlings() {
 		for (var i = 0; i < SeedlingsSpawnRatePerYear; i++) {
-			var seed = spawn Tree at GetRelativePosition(xcor, ycor, random(50), random(360))
+			var seed = spawn Tree at GetRelativePosition(xcor, ycor, random(360), random(50))
 			seed.SetSpecies(Species)		
-			seed.SetTreeAgeGroup(TreeAgeGroup.Seed)		
 			seed.SetRaster(Raster)		
 		} 
 	}
@@ -387,16 +392,16 @@ agent Tree on SavannaLayer {
 	}
 	
 	def IsPopulationDensityExceeded() {			
-		return IsTooCloseTo(TreeAgeGroup.Seed, ALL_SPECIES, 4) or 
-				IsTooCloseTo(TreeAgeGroup.Seedling, ALL_SPECIES, 4) or 
-				IsTooCloseTo(TreeAgeGroup.Juvenile, AN, 32) or 
-				IsTooCloseTo(TreeAgeGroup.Juvenile, CA, 40) or 
-				IsTooCloseTo(TreeAgeGroup.Juvenile, SB, 80) or 
-				IsTooCloseTo(TreeAgeGroup.Juvenile, TT, 52) or 
-				IsTooCloseTo(TreeAgeGroup.Adult, AN, 80) or
-				IsTooCloseTo(TreeAgeGroup.Adult, CA, 80) or
-				IsTooCloseTo(TreeAgeGroup.Adult, SB, 200) or
-				IsTooCloseTo(TreeAgeGroup.Adult, TT, 120) 
+		return IsTooCloseTo(TreeAgeGroup.Seed, ALL_SPECIES, 0.04) or 
+				IsTooCloseTo(TreeAgeGroup.Seedling, ALL_SPECIES, 0.04) or 
+				IsTooCloseTo(TreeAgeGroup.Juvenile, AN, 0.32) or 
+				IsTooCloseTo(TreeAgeGroup.Juvenile, CA, 0.40) or 
+				IsTooCloseTo(TreeAgeGroup.Juvenile, SB, 0.80) or 
+				IsTooCloseTo(TreeAgeGroup.Juvenile, TT, 0.52) or 
+				IsTooCloseTo(TreeAgeGroup.Adult, AN, 0.80) or
+				IsTooCloseTo(TreeAgeGroup.Adult, CA, 0.80) or
+				IsTooCloseTo(TreeAgeGroup.Adult, SB, 2.00) or
+				IsTooCloseTo(TreeAgeGroup.Adult, TT, 1.20) 
 	}
 	
 	def IsTooCloseTo(treeAgeGroup : TreeAgeGroup, species : string, minDistance : real) {
@@ -443,6 +448,8 @@ agent Tree on SavannaLayer {
 	
 	def Die(reason : string) {
 		DyingReason = reason
+		var rafiki = nearest Rafiki 
+		rafiki.Save(DyingReason, MyTreeAgeGroup)
 		MyTreeAgeGroup = TreeAgeGroup.Death	
 		kill me
 	}
@@ -468,23 +475,23 @@ agent Tree on SavannaLayer {
 		DeadWoodMass = DeadWoodMass + GenerateDeadwoodMass
 	}
 	
-	static def Reduce(growthrate : real, min : integer, max : integer) {
+	def Reduce(growthrate : real, min : integer, max : integer) {
 		return growthrate * (min + RandomBetween(min, max)) / 100 
 	}
         
-	static def RandomPropabilitySmallenThan(percentage : integer) {
+	def RandomPropabilitySmallenThan(percentage : integer) {
 		return random(100) < percentage
 	}
 	
-	static def RandomBetween(min : integer, max : integer) : real {
+	def RandomBetween(min : integer, max : integer) : real {
 		return random(max + 1 - min) + min 
 	}
 	
-	static def ReducedTo(minPercentage : integer, maxPercentag : integer) : real {
+	def ReducedTo(minPercentage : integer, maxPercentag : integer) : real {
 		return RandomBetween(minPercentage, maxPercentag) / 100
 	}
 	
-    def GetRelativePosition(originLongitude : real, originLatitude : real, bearing : real, distanceInM  : real)  {
+    def GetRelativePosition(originLongitude : real, originLatitude : real, bearing : real, distanceInM : real)  {
     	var DegreesToRadians : real = PI / 180.0
     	var RadiansToDegrees : real = 180.0 / PI
     	var latA : real = DegreesToRadians * originLatitude

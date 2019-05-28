@@ -1,0 +1,140 @@
+model SavannaTrees
+
+use Mars 
+
+agent Rafiki on SavannaLayer {	
+	observe var droughtSeed : integer
+	observe var droughtSeedling : integer
+	 var droughtJuvenile : integer
+	 var droughtAdult : integer
+	
+	observe var randomSeed : integer
+	 var randomSeedling : integer
+	 var randomJuvenile : integer
+	 var randomAdult : integer
+	
+	observe var populationDensitySeed : integer
+	 var populationDensitySeedling : integer
+	 var populationDensityJuvenile : integer
+	 var populationDensityAdult : integer
+	
+	observe var driedSeed : integer
+	observe var driedSeedling : integer
+	 var driedJuvenile : integer
+	 var driedAdult : integer
+	
+	observe var damagedSeedling : integer
+	 var damagedJuvenile : integer
+	 var damagedAdult : integer
+	
+	 var frozenSeedling : integer
+	 var frozenJuvenile : integer
+	 var frozenAdult : integer
+		
+	observe var seedAcc : integer
+	observe var growToSeedling : integer
+	
+	passive AccSeed()  {
+		seedAcc = seedAcc + 1
+	}
+	passive GrowToSeedling()  {
+		growToSeedling = growToSeedling + 1
+	}
+	
+	passive Save(dyingReason : string, treeAgeGroup : TreeAgeGroup)  {
+		if(dyingReason !== "RandomProbability" and dyingReason !== "PopulationDensity" and dyingReason !== "Drought") {
+			println dyingReason
+		}
+		if(dyingReason === "Drought") {
+			if(treeAgeGroup === TreeAgeGroup.Seed) {
+				droughtSeed = droughtSeed + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				droughtSeedling = droughtSeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				droughtJuvenile = droughtJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				droughtAdult = droughtAdult + 1;
+			} 
+		} else if(dyingReason === "RandomProbability") {
+			if(treeAgeGroup === TreeAgeGroup.Seed) {
+				randomSeed = randomSeed + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				randomSeedling = randomSeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				randomJuvenile = randomJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				randomAdult = randomAdult + 1;
+			} 
+		} else if(dyingReason === "PopulationDensity") {
+			if(treeAgeGroup === TreeAgeGroup.Seed) {
+				populationDensitySeed = populationDensitySeed + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				populationDensitySeedling = populationDensitySeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				populationDensityJuvenile = populationDensityJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				populationDensityAdult = populationDensityAdult + 1;
+			} 
+		} else if(dyingReason === "Dried") {
+			if(treeAgeGroup === TreeAgeGroup.Seed) {
+				driedSeed = driedSeed + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				driedSeedling = driedSeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				driedJuvenile = driedJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				driedAdult = driedAdult + 1;
+			} 
+		} else if(dyingReason === "Damaged") {
+			if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				damagedSeedling = damagedSeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				damagedJuvenile = damagedJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				damagedAdult = damagedAdult + 1;
+			} 
+		} else if(dyingReason === "Frozen") {
+			if(treeAgeGroup === TreeAgeGroup.Seedling) {
+				frozenSeedling = damagedSeedling + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
+				frozenJuvenile = damagedJuvenile + 1;
+			} else if(treeAgeGroup === TreeAgeGroup.Adult) {
+				frozenAdult = damagedAdult + 1;
+			} 
+		}
+	}
+	
+	tick {
+		seedAcc = 0
+		growToSeedling = 0
+		
+		droughtSeed = 0
+		droughtSeedling = 0
+		droughtJuvenile = 0
+		droughtAdult = 0
+		
+		randomSeed = 0
+		randomSeedling = 0
+		randomJuvenile = 0
+		randomAdult = 0
+		
+		populationDensitySeed = 0
+		populationDensitySeedling = 0
+		populationDensityJuvenile = 0
+		populationDensityAdult = 0
+		
+		driedSeed = 0
+		driedSeedling = 0
+		driedJuvenile = 0
+		driedAdult = 0
+		
+		damagedSeedling = 0
+		damagedJuvenile = 0
+		damagedAdult = 0
+		
+		frozenSeedling = 0
+		frozenJuvenile = 0
+		frozenAdult = 0
+	}
+}
+
