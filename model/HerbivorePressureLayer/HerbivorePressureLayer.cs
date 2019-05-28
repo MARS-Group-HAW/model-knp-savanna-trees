@@ -22,7 +22,7 @@ namespace Bushbuckridge.Agents.Collector
 
         public void Tick()
         {
-            if (_dayOfTick != null && _dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
+            if (_dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
             _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
  
             if (!IsNextYearTick()) return;
