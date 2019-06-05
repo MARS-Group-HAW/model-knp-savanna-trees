@@ -4,6 +4,7 @@ use Mars
 
 raster-layer Temperature as temperature
 raster-layer Precipitation as precipitation
+raster-layer TreeRaster as treeRaster
 
 layer SavannaLayer
 
@@ -64,6 +65,9 @@ agent Tree on SavannaLayer {
 			growthBoosterByClimate = 1.3
 		}
 		InitializeYear = Time::Year(simtime)
+		
+//			var result = treeRaster.GetNumberValue(ycor, xcor)
+//			println result //TODO debug raster layer
 	}
 	
 	passive Xcor()  {
@@ -166,10 +170,10 @@ agent Tree on SavannaLayer {
 	passive SufferHerbivorePressure() {
 		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) { //TODO and height < 1.5m
 			switch (Species) {
-			case AN: { ReduceStemDiameterBy(5) }
-			case CA: { ReduceStemDiameterBy(20) }
-			case SB: { ReduceStemDiameterBy(30) }
-			case TT: { ReduceStemDiameterBy(18) } 
+			case AN: { ReduceStemDiameterBy(4) }
+			case CA: { ReduceStemDiameterBy(1) }
+			case SB: { ReduceStemDiameterBy(6) }
+			case TT: { ReduceStemDiameterBy(4) } 
 			}
 		}
 	}
@@ -229,13 +233,13 @@ agent Tree on SavannaLayer {
 	def Seed() {	
 		if (HasPrecipitation) {					
 			var rafiki = nearest Rafiki 
-			rafiki.AccSeed()
+			rafiki.Save("SpawnedSeeds")
 			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
 				Die("RandomProbability") 
 			} else if (IsPopulationDensityExceeded()) {
 				Die("PopulationDensity")
 			} else {
-			rafiki.GrowToSeedling()
+				rafiki.Save("GrowedToSeedling")
 				FirstTickAsSeedling = simtime	
 				MyTreeAgeGroup = TreeAgeGroup.Seedling 
 			}
@@ -309,7 +313,14 @@ agent Tree on SavannaLayer {
 		for (var i = 0; i < SeedlingsSpawnRatePerYear; i++) {
 			var seed = spawn Tree at GetRelativePosition(xcor, ycor, random(360), random(50))
 			seed.SetSpecies(Species)		
-			seed.SetRaster(Raster)		
+			seed.SetRaster(Raster)
+			
+//			var raster = treeRaster.GetNumberValue(ycor, xcor)
+//			if(raster > 0) {
+//				seed.SetRaster(raster) //TODO use raster
+//			} else {
+//				Die("DeathZone")
+//			}		
 		} 
 	}
 	
@@ -449,7 +460,7 @@ agent Tree on SavannaLayer {
 	def Die(reason : string) {
 		DyingReason = reason
 		var rafiki = nearest Rafiki 
-		rafiki.Save(DyingReason, MyTreeAgeGroup)
+		rafiki.SaveDyingReason(reason, MyTreeAgeGroup)
 		MyTreeAgeGroup = TreeAgeGroup.Death	
 		kill me
 	}
