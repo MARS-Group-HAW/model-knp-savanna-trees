@@ -3,23 +3,28 @@ model SavannaTrees
 use Mars 
 
 agent Rafiki on SavannaLayer {	
-	observe var Seed : integer
-	observe var Seedling : integer
-	observe var Juvenile : integer
-	observe var Adult : integer
+	observe var DeadSeed : integer
+	observe var DeadSeedling : integer
+	observe var DeadJuvenile : integer
+	observe var DeadAdult : integer
 	
-	observe var RandomProbability : integer
-	observe var PopulationDensity : integer
-	observe var Dried : integer
-	observe var Drought : integer
-	observe var Damaged : integer
-	observe var Frozen : integer
-	observe var DeathZone : integer
-	observe var PushOver : integer
-	observe var RoundBarked : integer
+	observe var DieRandomProbability : integer
+	observe var DiePopulationDensity : integer
+	observe var DieDried : integer
+	observe var DieDrought : integer
+	observe var DieDamaged : integer
+	observe var DieFrozen : integer
+	observe var DieDeathZone : integer
+	observe var DiePushOver : integer
+	observe var DieRoundBarked : integer
 		
 	observe var SpawnedSeeds : integer
 	observe var GrowedToSeedling : integer
+	
+	observe var DT_Light : integer
+	observe var DT_Moderate : integer
+	observe var DT_Heavy : integer
+	observe var DT_Extreme : integer
 	
 	passive Save(fact : string)  {
 		switch (fact) {
@@ -28,47 +33,64 @@ agent Rafiki on SavannaLayer {
 		}
 	}
 	
+	passive SaveDamageType(damageType : DamageType)  {
+		if(damageType === DamageType.Light) {
+			DT_Light = DT_Light + 1
+		} else if(damageType === DamageType.Moderate) {
+			DT_Moderate = DT_Moderate + 1
+		} else if(damageType === DamageType.Heavy) {
+			DT_Heavy = DT_Heavy + 1
+		} else if(damageType === DamageType.Extreme) {
+			DT_Extreme = DT_Extreme + 1
+		} 
+	}
+	
 	passive SaveDyingReason(fact : string, treeAgeGroup : TreeAgeGroup)  {
 		if(treeAgeGroup === TreeAgeGroup.Seed) {
-			Seed = Seed + 1
+			DeadSeed = DeadSeed + 1
 		} else if(treeAgeGroup === TreeAgeGroup.Seedling) {
-			Seedling = Seedling + 1
+			DeadSeedling = DeadSeedling + 1
 		}  else if(treeAgeGroup === TreeAgeGroup.Juvenile) {
-			Juvenile = Juvenile + 1
+			DeadJuvenile = DeadJuvenile + 1
 		}  else if(treeAgeGroup === TreeAgeGroup.Adult) {
-			Adult = Adult + 1
+			DeadAdult = DeadAdult + 1
 		} 
 		
 		switch (fact) {
-			case "Drought": { Drought = Drought + 1 }
-			case "RandomProbability": { RandomProbability = RandomProbability + 1 }
-			case "PopulationDensity": { PopulationDensity = PopulationDensity + 1 }
-			case "Dried": { Dried = Dried + 1 }
-			case "Damaged": { Damaged = Damaged + 1 }
-			case "Frozen": { Frozen = Frozen + 1 }
-			case "DeathZone": { DeathZone = DeathZone + 1 }
-			case "PushOver": { PushOver = PushOver + 1 }
-			case "RoundBarked": { RoundBarked = RoundBarked + 1 }
+			case "Drought": { DieDrought = DieDrought + 1 }
+			case "RandomProbability": { DieRandomProbability = DieRandomProbability + 1 }
+			case "PopulationDensity": { DiePopulationDensity = DiePopulationDensity + 1 }
+			case "Dried": { DieDried = DieDried + 1 }
+			case "Damaged": { DieDamaged = DieDamaged + 1 }
+			case "Frozen": { DieFrozen = DieFrozen + 1 }
+			case "DeathZone": { DieDeathZone = DieDeathZone + 1 }
+			case "PushOver": { DiePushOver = DiePushOver + 1 }
+			case "RoundBarked": { DieRoundBarked = DieRoundBarked + 1 }
 		}
 	}
 	
 	tick {
-			Seed = 0
-			Seedling = 0
-			Juvenile = 0
-			Adult = 0
+			DeadSeed = 0
+			DeadSeedling = 0
+			DeadJuvenile = 0
+			DeadAdult = 0
 
-			RandomProbability = 0
-			PopulationDensity = 0
-			Dried = 0
-			Drought = 0
-			Damaged = 0
-			Frozen = 0
-			PopulationDensity = 0
-			DeathZone = 0
+			DieRandomProbability = 0
+			DiePopulationDensity = 0
+			DieDried = 0
+			DieDrought = 0
+			DieDamaged = 0
+			DieFrozen = 0
+			DiePopulationDensity = 0
+			DieDeathZone = 0
 
 			SpawnedSeeds = 0
 			GrowedToSeedling = 0
+			
+			DT_Light = 0
+			DT_Moderate = 0
+			DT_Heavy = 0
+			DT_Extreme = 0
 	}
 }
 

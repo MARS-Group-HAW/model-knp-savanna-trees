@@ -4,7 +4,7 @@ use Mars
 
 raster-layer Temperature as temperature
 raster-layer Precipitation as precipitation
-raster-layer TreeRaster as treeRaster
+//raster-layer TreeRaster as treeRaster
 
 layer SavannaLayer
 
@@ -19,7 +19,7 @@ agent Tree on SavannaLayer {
 	static var SeedlingSurvivalRate : integer // percentage
 	
 	static var AN = "an" 			// Arkazie
-	static var CA = "ca" 			// Combretum apiculatun
+	static var CA = "ca" 			// Combretum apiculatum
 	static var SB = "sb" 			// Marula
 	static var TT = "tt" 			// Generic tree
 	static var ALL_SPECIES = "ALL" 
@@ -46,7 +46,7 @@ agent Tree on SavannaLayer {
 	
 	var HasLeaves : bool
 		
-	var FirstTickAsSeedling : real
+	var FirstDayAsSeedling : real
 	
 	def TreePosition() => return #(xcor, ycor)
 		
@@ -117,7 +117,7 @@ agent Tree on SavannaLayer {
 	
 	passive TakePushOver() {
 		var result = ReduceLivingWoodMassBy(LivingWoodMass)
-		if (RandomPropabilitySmallenThan(50)) {
+		if (RandomProbabilitySmallenThan(50)) {
 			Die("PushOver")
 		}
 		return result
@@ -141,6 +141,9 @@ agent Tree on SavannaLayer {
 			result = currentLivingWoodMass
 		}
 		MyDamageType = CalculateDamageType(result)
+		var rafiki = nearest Rafiki 
+		rafiki.SaveDamageType(MyDamageType)
+		
 		LivingWoodMass = LivingWoodMass - result
 				
 		StemDiameter = CalculateDiameterByWoodMass
@@ -162,13 +165,13 @@ agent Tree on SavannaLayer {
 	}
 	
 	passive SufferDrought() {
-		if (MyTreeAgeGroup !== TreeAgeGroup.Adult and RandomPropabilitySmallenThan(7)) {
+		if (MyTreeAgeGroup !== TreeAgeGroup.Adult and RandomProbabilitySmallenThan(7)) {
 			Die("Drought")
 		}
 	}
 	
 	passive SufferHerbivorePressure() {
-		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) { //TODO and height < 1.5m
+		if (RandomProbabilitySmallenThan(30) and (MyTreeAgeGroup === TreeAgeGroup.Juvenile or MyTreeAgeGroup === TreeAgeGroup.Adult)) { 
 			switch (Species) {
 			case AN: { ReduceStemDiameterBy(4) }
 			case CA: { ReduceStemDiameterBy(1) }
@@ -234,13 +237,13 @@ agent Tree on SavannaLayer {
 		if (HasPrecipitation) {					
 			var rafiki = nearest Rafiki 
 			rafiki.Save("SpawnedSeeds")
-			if (RandomPropabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
+			if (RandomProbabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
 				Die("RandomProbability") 
 			} else if (IsPopulationDensityExceeded()) {
 				Die("PopulationDensity")
 			} else {
 				rafiki.Save("GrowedToSeedling")
-				FirstTickAsSeedling = simtime	
+				FirstDayAsSeedling = Time::TotalDays(simtime)	
 				MyTreeAgeGroup = TreeAgeGroup.Seedling 
 			}
 		} 	
@@ -262,13 +265,13 @@ agent Tree on SavannaLayer {
 		if (Species === AN) return false
 		
 		var tempToday = temperature.GetNumberValue(ycor, xcor)	
-		return tempToday < 0 and RandomPropabilitySmallenThan(80)
+		return tempToday < 0 and RandomProbabilitySmallenThan(80)
 	}
 			
 	var seedSurvivedFirst12Days : bool
 	
 	def IsDried() {
-		if (FirstTickAsSeedling + 12 > simtime) {
+		if (FirstDayAsSeedling + 12 > Time::TotalDays(simtime)) {
 			seedSurvivedFirst12Days = HasPrecipitation or seedSurvivedFirst12Days
 			return false
 		} 
@@ -490,7 +493,7 @@ agent Tree on SavannaLayer {
 		return growthrate * (min + RandomBetween(min, max)) / 100 
 	}
         
-	def RandomPropabilitySmallenThan(percentage : integer) {
+	def RandomProbabilitySmallenThan(percentage : integer) {
 		return random(100) < percentage
 	}
 	

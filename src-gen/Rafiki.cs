@@ -15,108 +15,108 @@ namespace SavannaTrees {
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(Rafiki));
 		private static readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
-		private int __Seed
+		private int __DeadSeed
 			 = default(int);
-		public int Seed { 
-			get { return __Seed; }
+		public int DeadSeed { 
+			get { return __DeadSeed; }
 			set{
-				if(__Seed != value) __Seed = value;
+				if(__DeadSeed != value) __DeadSeed = value;
 			}
 		}
-		private int __Seedling
+		private int __DeadSeedling
 			 = default(int);
-		public int Seedling { 
-			get { return __Seedling; }
+		public int DeadSeedling { 
+			get { return __DeadSeedling; }
 			set{
-				if(__Seedling != value) __Seedling = value;
+				if(__DeadSeedling != value) __DeadSeedling = value;
 			}
 		}
-		private int __Juvenile
+		private int __DeadJuvenile
 			 = default(int);
-		public int Juvenile { 
-			get { return __Juvenile; }
+		public int DeadJuvenile { 
+			get { return __DeadJuvenile; }
 			set{
-				if(__Juvenile != value) __Juvenile = value;
+				if(__DeadJuvenile != value) __DeadJuvenile = value;
 			}
 		}
-		private int __Adult
+		private int __DeadAdult
 			 = default(int);
-		public int Adult { 
-			get { return __Adult; }
+		public int DeadAdult { 
+			get { return __DeadAdult; }
 			set{
-				if(__Adult != value) __Adult = value;
+				if(__DeadAdult != value) __DeadAdult = value;
 			}
 		}
-		private int __RandomProbability
+		private int __DieRandomProbability
 			 = default(int);
-		public int RandomProbability { 
-			get { return __RandomProbability; }
+		public int DieRandomProbability { 
+			get { return __DieRandomProbability; }
 			set{
-				if(__RandomProbability != value) __RandomProbability = value;
+				if(__DieRandomProbability != value) __DieRandomProbability = value;
 			}
 		}
-		private int __PopulationDensity
+		private int __DiePopulationDensity
 			 = default(int);
-		public int PopulationDensity { 
-			get { return __PopulationDensity; }
+		public int DiePopulationDensity { 
+			get { return __DiePopulationDensity; }
 			set{
-				if(__PopulationDensity != value) __PopulationDensity = value;
+				if(__DiePopulationDensity != value) __DiePopulationDensity = value;
 			}
 		}
-		private int __Dried
+		private int __DieDried
 			 = default(int);
-		public int Dried { 
-			get { return __Dried; }
+		public int DieDried { 
+			get { return __DieDried; }
 			set{
-				if(__Dried != value) __Dried = value;
+				if(__DieDried != value) __DieDried = value;
 			}
 		}
-		private int __Drought
+		private int __DieDrought
 			 = default(int);
-		public int Drought { 
-			get { return __Drought; }
+		public int DieDrought { 
+			get { return __DieDrought; }
 			set{
-				if(__Drought != value) __Drought = value;
+				if(__DieDrought != value) __DieDrought = value;
 			}
 		}
-		private int __Damaged
+		private int __DieDamaged
 			 = default(int);
-		public int Damaged { 
-			get { return __Damaged; }
+		public int DieDamaged { 
+			get { return __DieDamaged; }
 			set{
-				if(__Damaged != value) __Damaged = value;
+				if(__DieDamaged != value) __DieDamaged = value;
 			}
 		}
-		private int __Frozen
+		private int __DieFrozen
 			 = default(int);
-		public int Frozen { 
-			get { return __Frozen; }
+		public int DieFrozen { 
+			get { return __DieFrozen; }
 			set{
-				if(__Frozen != value) __Frozen = value;
+				if(__DieFrozen != value) __DieFrozen = value;
 			}
 		}
-		private int __DeathZone
+		private int __DieDeathZone
 			 = default(int);
-		public int DeathZone { 
-			get { return __DeathZone; }
+		public int DieDeathZone { 
+			get { return __DieDeathZone; }
 			set{
-				if(__DeathZone != value) __DeathZone = value;
+				if(__DieDeathZone != value) __DieDeathZone = value;
 			}
 		}
-		private int __PushOver
+		private int __DiePushOver
 			 = default(int);
-		public int PushOver { 
-			get { return __PushOver; }
+		public int DiePushOver { 
+			get { return __DiePushOver; }
 			set{
-				if(__PushOver != value) __PushOver = value;
+				if(__DiePushOver != value) __DiePushOver = value;
 			}
 		}
-		private int __RoundBarked
+		private int __DieRoundBarked
 			 = default(int);
-		public int RoundBarked { 
-			get { return __RoundBarked; }
+		public int DieRoundBarked { 
+			get { return __DieRoundBarked; }
 			set{
-				if(__RoundBarked != value) __RoundBarked = value;
+				if(__DieRoundBarked != value) __DieRoundBarked = value;
 			}
 		}
 		private int __SpawnedSeeds
@@ -135,33 +135,96 @@ namespace SavannaTrees {
 				if(__GrowedToSeedling != value) __GrowedToSeedling = value;
 			}
 		}
+		private int __DT_Light
+			 = default(int);
+		public int DT_Light { 
+			get { return __DT_Light; }
+			set{
+				if(__DT_Light != value) __DT_Light = value;
+			}
+		}
+		private int __DT_Moderate
+			 = default(int);
+		public int DT_Moderate { 
+			get { return __DT_Moderate; }
+			set{
+				if(__DT_Moderate != value) __DT_Moderate = value;
+			}
+		}
+		private int __DT_Heavy
+			 = default(int);
+		public int DT_Heavy { 
+			get { return __DT_Heavy; }
+			set{
+				if(__DT_Heavy != value) __DT_Heavy = value;
+			}
+		}
+		private int __DT_Extreme
+			 = default(int);
+		public int DT_Extreme { 
+			get { return __DT_Extreme; }
+			set{
+				if(__DT_Extreme != value) __DT_Extreme = value;
+			}
+		}
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 		public void Save(
 		string fact) {
 			{
-			string _switch25_604 = (fact);
-			bool _matched_25_604 = false;
-			bool _fallthrough_25_604 = false;
-			if(!_matched_25_604 || _fallthrough_25_604) {
-				if(Equals(_switch25_604, "SpawnedSeeds")) {
-					_matched_25_604 = true;
+			string _switch30_782 = (fact);
+			bool _matched_30_782 = false;
+			bool _fallthrough_30_782 = false;
+			if(!_matched_30_782 || _fallthrough_30_782) {
+				if(Equals(_switch30_782, "SpawnedSeeds")) {
+					_matched_30_782 = true;
 					{
 					SpawnedSeeds = SpawnedSeeds + 1
 					;}
 				} else {
-					_fallthrough_25_604 = false;
+					_fallthrough_30_782 = false;
 				}
 			}
-			if(!_matched_25_604 || _fallthrough_25_604) {
-				if(Equals(_switch25_604, "GrowedToSeedling")) {
-					_matched_25_604 = true;
+			if(!_matched_30_782 || _fallthrough_30_782) {
+				if(Equals(_switch30_782, "GrowedToSeedling")) {
+					_matched_30_782 = true;
 					{
 					GrowedToSeedling = GrowedToSeedling + 1
 					;}
 				} else {
-					_fallthrough_25_604 = false;
+					_fallthrough_30_782 = false;
 				}
 			}
+			;}
+			
+			return;
+		}
+		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+		public void SaveDamageType(
+		SavannaTrees.DamageType damageType) {
+			{
+			if(Equals(damageType, DamageType.Light)) {
+							{
+							DT_Light = DT_Light + 1
+							;}
+					;} else {
+							if(Equals(damageType, DamageType.Moderate)) {
+											{
+											DT_Moderate = DT_Moderate + 1
+											;}
+									;} else {
+											if(Equals(damageType, DamageType.Heavy)) {
+															{
+															DT_Heavy = DT_Heavy + 1
+															;}
+													;} else {
+															if(Equals(damageType, DamageType.Extreme)) {
+																			{
+																			DT_Extreme = DT_Extreme + 1
+																			;}
+																	;} 
+														;}
+										;}
+						;}
 			;}
 			
 			return;
@@ -173,118 +236,118 @@ namespace SavannaTrees {
 			{
 			if(Equals(treeAgeGroup, TreeAgeGroup.Seed)) {
 							{
-							Seed = Seed + 1
+							DeadSeed = DeadSeed + 1
 							;}
 					;} else {
 							if(Equals(treeAgeGroup, TreeAgeGroup.Seedling)) {
 											{
-											Seedling = Seedling + 1
+											DeadSeedling = DeadSeedling + 1
 											;}
 									;} else {
 											if(Equals(treeAgeGroup, TreeAgeGroup.Juvenile)) {
 															{
-															Juvenile = Juvenile + 1
+															DeadJuvenile = DeadJuvenile + 1
 															;}
 													;} else {
 															if(Equals(treeAgeGroup, TreeAgeGroup.Adult)) {
 																			{
-																			Adult = Adult + 1
+																			DeadAdult = DeadAdult + 1
 																			;}
 																	;} 
 														;}
 										;}
 						;};
-			string _switch42_1141 = (fact);
-			bool _matched_42_1141 = false;
-			bool _fallthrough_42_1141 = false;
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "Drought")) {
-					_matched_42_1141 = true;
+			string _switch59_1717 = (fact);
+			bool _matched_59_1717 = false;
+			bool _fallthrough_59_1717 = false;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "Drought")) {
+					_matched_59_1717 = true;
 					{
-					Drought = Drought + 1
+					DieDrought = DieDrought + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "RandomProbability")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "RandomProbability")) {
+					_matched_59_1717 = true;
 					{
-					RandomProbability = RandomProbability + 1
+					DieRandomProbability = DieRandomProbability + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "PopulationDensity")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "PopulationDensity")) {
+					_matched_59_1717 = true;
 					{
-					PopulationDensity = PopulationDensity + 1
+					DiePopulationDensity = DiePopulationDensity + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "Dried")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "Dried")) {
+					_matched_59_1717 = true;
 					{
-					Dried = Dried + 1
+					DieDried = DieDried + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "Damaged")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "Damaged")) {
+					_matched_59_1717 = true;
 					{
-					Damaged = Damaged + 1
+					DieDamaged = DieDamaged + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "Frozen")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "Frozen")) {
+					_matched_59_1717 = true;
 					{
-					Frozen = Frozen + 1
+					DieFrozen = DieFrozen + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "DeathZone")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "DeathZone")) {
+					_matched_59_1717 = true;
 					{
-					DeathZone = DeathZone + 1
+					DieDeathZone = DieDeathZone + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "PushOver")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "PushOver")) {
+					_matched_59_1717 = true;
 					{
-					PushOver = PushOver + 1
+					DiePushOver = DiePushOver + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
-			if(!_matched_42_1141 || _fallthrough_42_1141) {
-				if(Equals(_switch42_1141, "RoundBarked")) {
-					_matched_42_1141 = true;
+			if(!_matched_59_1717 || _fallthrough_59_1717) {
+				if(Equals(_switch59_1717, "RoundBarked")) {
+					_matched_59_1717 = true;
 					{
-					RoundBarked = RoundBarked + 1
+					DieRoundBarked = DieRoundBarked + 1
 					;}
 				} else {
-					_fallthrough_42_1141 = false;
+					_fallthrough_59_1717 = false;
 				}
 			}
 			;}
@@ -300,8 +363,6 @@ namespace SavannaTrees {
 		public SavannaTrees.Precipitation precipitation => _Precipitation;
 		public SavannaTrees.Temperature _Temperature { get; set; }
 		public SavannaTrees.Temperature temperature => _Temperature;
-		public SavannaTrees.TreeRaster _TreeRaster { get; set; }
-		public SavannaTrees.TreeRaster treeRaster => _TreeRaster;
 		
 		[Mars.Interfaces.LIFECapabilities.PublishForMappingInMars]
 		public Rafiki (
@@ -311,8 +372,7 @@ namespace SavannaTrees {
 		Mars.Interfaces.Layer.UnregisterAgent _unregister,
 		Mars.Components.Environments.GeoGridHashEnvironment<Rafiki> _RafikiEnvironment,
 		SavannaTrees.Precipitation _Precipitation,
-		SavannaTrees.Temperature _Temperature,
-		SavannaTrees.TreeRaster _TreeRaster
+		SavannaTrees.Temperature _Temperature
 	,	double xcor = 0, double ycor = 0, int freq = 1)
 		 : base (xcor, ycor)
 		{
@@ -320,7 +380,6 @@ namespace SavannaTrees {
 			ID = _id;
 			this._Precipitation = _Precipitation;
 			this._Temperature = _Temperature;
-			this._TreeRaster = _TreeRaster;
 			_SavannaLayer._RafikiEnvironment.Insert(this);
 			_register(_layer, this, freq);
 			_isAlive = true;
@@ -331,20 +390,24 @@ namespace SavannaTrees {
 		{
 			{ if (!_isAlive) return; }
 			{
-			Seed = 0;
-			Seedling = 0;
-			Juvenile = 0;
-			Adult = 0;
-			RandomProbability = 0;
-			PopulationDensity = 0;
-			Dried = 0;
-			Drought = 0;
-			Damaged = 0;
-			Frozen = 0;
-			PopulationDensity = 0;
-			DeathZone = 0;
+			DeadSeed = 0;
+			DeadSeedling = 0;
+			DeadJuvenile = 0;
+			DeadAdult = 0;
+			DieRandomProbability = 0;
+			DiePopulationDensity = 0;
+			DieDried = 0;
+			DieDrought = 0;
+			DieDamaged = 0;
+			DieFrozen = 0;
+			DiePopulationDensity = 0;
+			DieDeathZone = 0;
 			SpawnedSeeds = 0;
-			GrowedToSeedling = 0
+			GrowedToSeedling = 0;
+			DT_Light = 0;
+			DT_Moderate = 0;
+			DT_Heavy = 0;
+			DT_Extreme = 0
 			;}
 		}
 		
