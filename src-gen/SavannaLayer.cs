@@ -14,7 +14,7 @@ namespace SavannaTrees {
 	public class SavannaLayer : Mars.Components.Layers.AbstractLayer {
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(SavannaLayer));
-		private static readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
+		private readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
 		public Mars.Interfaces.Layer.UnregisterAgent _Unregister { get; set; }
 		public Mars.Interfaces.Layer.RegisterAgent _Register { get; set; }
 		private double?[] _bbox = new double?[4]; private int? _cellSizeMeters;

@@ -14,7 +14,7 @@ namespace SavannaTrees {
 	public class Tree : Mars.Interfaces.Environment.GeoCommon.GeoPosition, Mars.Interfaces.Agent.IMarsDslAgent {
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(Tree));
-		private static readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
+		private readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
 		private static double __growthBoosterByClimate
 			 = 1.0;
 		internal static double growthBoosterByClimate { 
@@ -285,7 +285,16 @@ namespace SavannaTrees {
 			SavannaTrees.Rafiki rafiki = new Func<SavannaTrees.Rafiki>(() => {
 			Func<SavannaTrees.Rafiki, bool> _predicate141_3168 = null;
 			Func<SavannaTrees.Rafiki, bool> _predicateMod141_3168 = new Func<SavannaTrees.Rafiki, bool>(_it => 
-				{ return _it.ID != this.ID && _predicate141_3168 != null && _predicate141_3168.Invoke(_it); });
+			{
+				if (_it?.ID == this.ID)
+				{
+					return false;
+				} else if (_predicate141_3168 != null)
+				{
+					return _predicate141_3168.Invoke(_it);
+				} else return true;
+			});
+			
 			
 			const int _range141_3168 = -1;
 			var _source141_3168 = this;
@@ -435,7 +444,16 @@ namespace SavannaTrees {
 							SavannaTrees.Rafiki rafiki = new Func<SavannaTrees.Rafiki>(() => {
 							Func<SavannaTrees.Rafiki, bool> _predicate235_5479 = null;
 							Func<SavannaTrees.Rafiki, bool> _predicateMod235_5479 = new Func<SavannaTrees.Rafiki, bool>(_it => 
-								{ return _it.ID != this.ID && _predicate235_5479 != null && _predicate235_5479.Invoke(_it); });
+							{
+								if (_it?.ID == this.ID)
+								{
+									return false;
+								} else if (_predicate235_5479 != null)
+								{
+									return _predicate235_5479.Invoke(_it);
+								} else return true;
+							});
+							
 							
 							const int _range235_5479 = -1;
 							var _source235_5479 = this;
@@ -835,7 +853,16 @@ namespace SavannaTrees {
 					return default(bool);;
 			});
 			Func<SavannaTrees.Tree, bool> _predicateMod418_10459 = new Func<SavannaTrees.Tree, bool>(_it => 
-				{ return _it.ID != this.ID && _predicate418_10459 != null && _predicate418_10459.Invoke(_it); });
+			{
+				if (_it?.ID == this.ID)
+				{
+					return false;
+				} else if (_predicate418_10459 != null)
+				{
+					return _predicate418_10459.Invoke(_it);
+				} else return true;
+			});
+			
 			
 			const int _range418_10459 = -1;
 			var _source418_10459 = this;
@@ -998,7 +1025,16 @@ namespace SavannaTrees {
 			SavannaTrees.Rafiki rafiki = new Func<SavannaTrees.Rafiki>(() => {
 			Func<SavannaTrees.Rafiki, bool> _predicate461_12154 = null;
 			Func<SavannaTrees.Rafiki, bool> _predicateMod461_12154 = new Func<SavannaTrees.Rafiki, bool>(_it => 
-				{ return _it.ID != this.ID && _predicate461_12154 != null && _predicate461_12154.Invoke(_it); });
+			{
+				if (_it?.ID == this.ID)
+				{
+					return false;
+				} else if (_predicate461_12154 != null)
+				{
+					return _predicate461_12154.Invoke(_it);
+				} else return true;
+			});
+			
 			
 			const int _range461_12154 = -1;
 			var _source461_12154 = this;

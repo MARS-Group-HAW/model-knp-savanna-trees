@@ -15,7 +15,7 @@ namespace SavannaTrees {
 	{
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(Precipitation));
-		private static readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
+		private readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
 		public SavannaTrees.Precipitation precipitation => this;
 	}
 }
