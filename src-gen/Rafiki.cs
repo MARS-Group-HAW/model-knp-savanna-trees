@@ -363,6 +363,8 @@ namespace SavannaTrees {
 		public SavannaTrees.Precipitation precipitation => _Precipitation;
 		public SavannaTrees.Temperature _Temperature { get; set; }
 		public SavannaTrees.Temperature temperature => _Temperature;
+		public SavannaTrees.TreeRaster _TreeRaster { get; set; }
+		public SavannaTrees.TreeRaster treeRaster => _TreeRaster;
 		
 		[Mars.Interfaces.LIFECapabilities.PublishForMappingInMars]
 		public Rafiki (
@@ -372,14 +374,16 @@ namespace SavannaTrees {
 		Mars.Interfaces.Layer.UnregisterAgent _unregister,
 		Mars.Components.Environments.GeoGridHashEnvironment<Rafiki> _RafikiEnvironment,
 		SavannaTrees.Precipitation _Precipitation,
-		SavannaTrees.Temperature _Temperature
+		SavannaTrees.Temperature _Temperature,
+		SavannaTrees.TreeRaster _TreeRaster
 	,	double xcor = 0, double ycor = 0, int freq = 1)
-		 : base (xcor, ycor)
+		 : base (ycor, xcor)
 		{
 			_SavannaLayer = _layer;
 			ID = _id;
 			this._Precipitation = _Precipitation;
 			this._Temperature = _Temperature;
+			this._TreeRaster = _TreeRaster;
 			_SavannaLayer._RafikiEnvironment.Insert(this);
 			_register(_layer, this, freq);
 			_isAlive = true;

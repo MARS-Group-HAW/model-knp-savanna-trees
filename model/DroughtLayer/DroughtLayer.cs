@@ -43,7 +43,10 @@ namespace Bushbuckridge.Agents.Collector
 
             if (!IsNextYearTick()) return;
 
-            Console.WriteLine(SimulationClock.CurrentTimePoint.Value.Year + " in " + _stopWatch.Elapsed.Days + "d " + _stopWatch.Elapsed.Hours + "h " + _stopWatch.Elapsed.Minutes + "m " + _stopWatch.Elapsed.Seconds + "s with prec: "+_precipitationWithinYear);
+            Console.WriteLine(SimulationClock.CurrentTimePoint.Value.Year + " in " + _stopWatch.Elapsed.Days + "d " +
+                              _stopWatch.Elapsed.Hours + "h " + _stopWatch.Elapsed.Minutes + "m " +
+                              _stopWatch.Elapsed.Seconds + "s with prec: " + _precipitationWithinYear +
+                              " and tree count: " + _savannaLayer._TreeAgents.Count);
             _stopWatch.Restart();
 
             HasDrought = _precipitationWithinYear < PrecipitationThreshold;

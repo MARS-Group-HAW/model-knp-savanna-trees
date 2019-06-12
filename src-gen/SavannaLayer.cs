@@ -22,14 +22,16 @@ namespace SavannaTrees {
 		public Mars.Components.Environments.GeoGridHashEnvironment<Tree> _TreeEnvironment { get; set; }
 		public Precipitation _Precipitation { get; set; }
 		public Temperature _Temperature { get; set; }
+		public TreeRaster _TreeRaster { get; set; }
 		public System.Collections.Generic.IDictionary<System.Guid, Rafiki> _RafikiAgents { get; set; }
 		public System.Collections.Generic.IDictionary<System.Guid, Tree> _TreeAgents { get; set; }
 		public SavannaLayer _SavannaLayer => this;
 		public SavannaLayer (
-		Precipitation _precipitation, Temperature _temperature, 
+		Precipitation _precipitation, Temperature _temperature, TreeRaster _treeraster, 
 		double? topLatitude = null, double? bottomLatitude = null, double? leftLatitude = null, double? rightLatitude = null, int? cellSizeMeters = null) {
 			this._Precipitation = _precipitation;
 			this._Temperature = _temperature;
+			this._TreeRaster = _treeraster;
 			_bbox[0] = topLatitude;_bbox[1] = bottomLatitude;_bbox[2] = leftLatitude;_bbox[3] = rightLatitude;
 			_cellSizeMeters = cellSizeMeters;
 		}
@@ -54,6 +56,10 @@ namespace SavannaTrees {
 				_factory.Height = this._Temperature.Metadata.CellSizeInDegree * this._Temperature.Metadata.HeightInGridCells;
 				_factory.Width = this._Temperature.Metadata.CellSizeInDegree * this._Temperature.Metadata.WidthInGridCells;
 				geometries.Add(_factory.CreateRectangle());
+				_factory.Base = new GeoAPI.Geometries.Coordinate(this._TreeRaster.Metadata.LowerLeftBound.Longitude, this._TreeRaster.Metadata.LowerLeftBound.Latitude);
+				_factory.Height = this._TreeRaster.Metadata.CellSizeInDegree * this._TreeRaster.Metadata.HeightInGridCells;
+				_factory.Width = this._TreeRaster.Metadata.CellSizeInDegree * this._TreeRaster.Metadata.WidthInGridCells;
+				geometries.Add(_factory.CreateRectangle());
 				var _feature = new NetTopologySuite.Geometries.GeometryCollection(geometries.ToArray()).Envelope;
 				this._RafikiEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Rafiki>.BuildEnvironment(_feature.Coordinates[1].Y, _feature.Coordinates[0].Y, _feature.Coordinates[0].X, _feature.Coordinates[2].X, _cellSizeMeters ?? 100);
 				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_feature.Coordinates[1].Y, _feature.Coordinates[0].Y, _feature.Coordinates[0].X, _feature.Coordinates[2].X, _cellSizeMeters ?? 100);
@@ -62,11 +68,11 @@ namespace SavannaTrees {
 			_RafikiAgents = Mars.Components.Services.AgentManager.SpawnAgents<Rafiki>(
 			initData.AgentInitConfigs.First(config => config.Type == typeof(Rafiki)),
 			regHandle, unregHandle, 
-			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature });
+			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster });
 			_TreeAgents = Mars.Components.Services.AgentManager.SpawnAgents<Tree>(
 			initData.AgentInitConfigs.First(config => config.Type == typeof(Tree)),
 			regHandle, unregHandle, 
-			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature });
+			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster });
 			
 			this._Register = regHandle;
 			this._Unregister = unregHandle;
@@ -79,7 +85,8 @@ namespace SavannaTrees {
 			var agent = new SavannaTrees.Rafiki(id, this, _Register, _Unregister,
 			_RafikiEnvironment,
 			_Precipitation, 
-			_Temperature
+			_Temperature, 
+			_TreeRaster
 		, 	xcor, ycor, freq);
 			_RafikiAgents.Add(id, agent);
 			return agent;
@@ -90,7 +97,8 @@ namespace SavannaTrees {
 			var agent = new SavannaTrees.Tree(id, this, _Register, _Unregister,
 			_TreeEnvironment,
 			_Precipitation, 
-			_Temperature
+			_Temperature, 
+			_TreeRaster
 		, 	default(bool), 
 			default(string), 
 			default(double), 
