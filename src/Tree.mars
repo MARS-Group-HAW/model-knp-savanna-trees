@@ -314,8 +314,8 @@ agent Tree on SavannaLayer {
 			var seed = spawn Tree at GetRelativePosition(ycor, xcor, random(360), random(50))
 			seed.SetSpecies(Species)	
 			
-			var raster = treeRaster.GetIntegerValue(xcor, ycor)
-			if(raster > 0) {
+			var raster = treeRaster.GetIntegerValue(seed.Xcor, seed.Ycor)
+			if (raster > 0) {
 				seed.SetRaster(raster + "") 
 			} else {
 				seed.Die("DeathZone")
