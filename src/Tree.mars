@@ -94,7 +94,7 @@ agent Tree on SavannaLayer {
 	
 	def UpdateOnNewBark() {
 		if (Bark < 0) {
-			Die("RoundBarked")
+			me.Die("RoundBarked")
 		} else if (Bark < 0.5) {
 			MyDamageType = DamageType.Moderate
 		}
@@ -115,7 +115,7 @@ agent Tree on SavannaLayer {
 	passive TakePushOver() {
 		var result = ReduceLivingWoodMassBy(LivingWoodMass)
 		if (RandomProbabilitySmallenThan(50)) {
-			Die("PushOver")
+			me.Die("PushOver")
 		}
 		return result
 	}
@@ -163,7 +163,7 @@ agent Tree on SavannaLayer {
 	
 	passive SufferDrought() {
 		if (MyTreeAgeGroup !== TreeAgeGroup.Adult and RandomProbabilitySmallenThan(7)) {
-			Die("Drought")
+			me.Die("Drought")
 		}
 	}
 	
@@ -235,9 +235,9 @@ agent Tree on SavannaLayer {
 			var rafiki = nearest Rafiki 
 			rafiki.Save("SpawnedSeeds")
 			if (RandomProbabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
-				Die("RandomProbability") 
+				me.Die("RandomProbability") 
 			} else if (IsPopulationDensityExceeded()) {
-				Die("PopulationDensity")
+				me.Die("PopulationDensity")
 			} else {
 				rafiki.Save("GrowedToSeedling")
 				FirstDayAsSeedling = Time::TotalDays(simtime)	
@@ -248,11 +248,11 @@ agent Tree on SavannaLayer {
 	
 	def Seedling() {	
 		if (IsFrozen) {
-			Die("Frozen")
+			me.Die("Frozen")
 		} else if (IsDried) {
-			Die("Dried")
+			me.Die("Dried")
 		} else if (MyDamageType !== DamageType.No) {
-			Die("Damaged")
+			me.Die("Damaged")
 		} else if (HasLeaves) {
 			GrowSeedling
 		} 		
@@ -261,7 +261,7 @@ agent Tree on SavannaLayer {
 	def IsFrozen() : bool {
 		if (Species === AN) return false
 		
-		var tempToday = temperature.GetNumberValue(ycor, xcor)	
+		var tempToday = temperature.GetNumberValue(xcor, ycor)	
 		return tempToday < 0 and RandomProbabilitySmallenThan(80)
 	}
 			
@@ -276,7 +276,7 @@ agent Tree on SavannaLayer {
 	}
 
 	def HasPrecipitation() {
-		var precipitationToday = precipitation.GetNumberValue(ycor, xcor)
+		var precipitationToday = precipitation.GetNumberValue(xcor, ycor)
 		return precipitationToday > 1
 	}
 
@@ -311,14 +311,14 @@ agent Tree on SavannaLayer {
 	
 	def SpawnSeedlings() {
 		for (var i = 0; i < SeedlingsSpawnRatePerYear; i++) {
-			var seed = spawn Tree at GetRelativePosition(xcor, ycor, random(360), random(50))
+			var seed = spawn Tree at GetRelativePosition(ycor, xcor, random(360), random(50))
 			seed.SetSpecies(Species)	
 			
-			var raster = treeRaster.GetIntegerValue(ycor, xcor)
+			var raster = treeRaster.GetIntegerValue(xcor, ycor)
 			if(raster > 0) {
 				seed.SetRaster(raster + "") 
 			} else {
-				Die("DeathZone")
+				seed.Die("DeathZone")
 			}		
 		} 
 	}
@@ -456,7 +456,7 @@ agent Tree on SavannaLayer {
 		return 0.017 * LivingWoodMass / DaysPerYear
 	}
 	
-	def Die(reason : string) {
+	passive Die(reason : string) {
 		DyingReason = reason
 		var rafiki = nearest Rafiki 
 		rafiki.SaveDyingReason(reason, MyTreeAgeGroup)
