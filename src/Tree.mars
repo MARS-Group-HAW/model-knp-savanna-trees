@@ -24,7 +24,7 @@ agent Tree on SavannaLayer {
 	static var TT = "tt" 			// Generic tree
 	static var ALL_SPECIES = "ALL" 
 	
-	static var SeedlingsSpawnRatePerYear = 50
+	static var SeedSpawnRatePerYear = 50
 	static var DaysPerYear = 365
 	static var DaysWithLeaves = 228
 	static var E = 2.718281828459045
@@ -234,7 +234,7 @@ agent Tree on SavannaLayer {
 		if (HasPrecipitation) {					
 			var rafiki = nearest Rafiki 
 			rafiki.Save("SpawnedSeeds")
-			if (RandomProbabilitySmallenThan(100 - SeedlingSurvivalRate )) { //+ random(SeedlingSurvivalRate)
+			if (RandomProbabilitySmallenThan(100 - SeedlingSurvivalRate + random(SeedlingSurvivalRate))) {
 				me.Die("RandomProbability") 
 			} else if (IsPopulationDensityExceeded()) {
 				me.Die("PopulationDensity")
@@ -305,12 +305,12 @@ agent Tree on SavannaLayer {
 			}
 		} 
 		if (Time::Month(simtime) === 3 and Time::Day(simtime) === 15) {
-			SpawnSeedlings
+			SpawnSeeds
 		}
 	}
 	
-	def SpawnSeedlings() {
-		for (var i = 0; i < SeedlingsSpawnRatePerYear; i++) {
+	def SpawnSeeds() {
+		for (var i = 0; i < SeedSpawnRatePerYear; i++) {
 			var seed = spawn Tree at GetRelativePosition(ycor, xcor, random(360), random(50))
 			seed.SetSpecies(Species)	
 			
