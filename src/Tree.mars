@@ -212,24 +212,26 @@ agent Tree on SavannaLayer {
 	}
 
 	tick {
-		UpdateTreeAgeGroup
-		UpdatePhotosyntheseActive
-		
-		if (MyTreeAgeGroup === TreeAgeGroup.Seed) {
-			Seed
-		} else if (MyTreeAgeGroup === TreeAgeGroup.Seedling) {
-			Seedling
-		} else if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) {
-			Juvenile
-		} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
-			Adult
-		}
+		if(MyTreeAgeGroup !== TreeAgeGroup.Death) {
+			UpdateTreeAgeGroup
+			UpdatePhotosyntheseActive
+			
+			if (MyTreeAgeGroup === TreeAgeGroup.Seed) {
+				Seed
+			} else if (MyTreeAgeGroup === TreeAgeGroup.Seedling) {
+				Seedling
+			} else if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) {
+				Juvenile
+			} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
+				Adult
+			}
 				
-		UpdateWoodMass
+			UpdateWoodMass
 		
-		if (Time::Month(simtime) === 3 and Time::Day(simtime) === 15) {
-			ResetDamageType
-			ResetBarkBy(30)
+			if (Time::Month(simtime) === 3 and Time::Day(simtime) === 15) {
+				ResetDamageType
+				ResetBarkBy(30)
+			}
 		}
 	}
 	
