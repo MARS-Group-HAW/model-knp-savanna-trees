@@ -162,7 +162,10 @@ agent Tree on SavannaLayer {
 	}
 	
 	passive SufferDrought() {
-		if (MyTreeAgeGroup !== TreeAgeGroup.Adult and RandomProbabilitySmallenThan(7)) {
+		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7)) { //+ random(18)
+			me.Die("Drought")
+		}
+		if (MyTreeAgeGroup !== TreeAgeGroup.Adult) {
 			me.Die("Drought")
 		}
 	}
