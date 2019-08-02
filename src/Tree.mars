@@ -165,7 +165,7 @@ agent Tree on SavannaLayer {
 		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7)) { //+ random(18)
 			me.Die("Drought")
 		}
-		if (MyTreeAgeGroup !== TreeAgeGroup.Adult) {
+		if (MyTreeAgeGroup === TreeAgeGroup.Seed or MyTreeAgeGroup === TreeAgeGroup.Seedling) {
 			me.Die("Drought")
 		}
 	}
