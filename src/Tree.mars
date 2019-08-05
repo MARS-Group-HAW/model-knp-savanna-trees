@@ -162,7 +162,7 @@ agent Tree on SavannaLayer {
 	}
 	
 	passive SufferDrought() {
-		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7 + random(18))) {
+		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7)) { // + random(18)
 			me.Die("Drought")
 		}
 		if (MyTreeAgeGroup === TreeAgeGroup.Seed or MyTreeAgeGroup === TreeAgeGroup.Seedling) {
@@ -417,8 +417,8 @@ agent Tree on SavannaLayer {
 				IsTooCloseTo(TreeAgeGroup.Juvenile, TT, 0.52) or 
 				IsTooCloseTo(TreeAgeGroup.Adult, AN, 0.80) or
 				IsTooCloseTo(TreeAgeGroup.Adult, CA, 0.80) or
-				IsTooCloseTo(TreeAgeGroup.Adult, SB, 2.00) or
-				IsTooCloseTo(TreeAgeGroup.Adult, TT, 1.20) 
+				IsTooCloseTo(TreeAgeGroup.Adult, SB, 5.00) or
+				IsTooCloseTo(TreeAgeGroup.Adult, TT, 2.20) 
 	}
 	
 	def IsTooCloseTo(treeAgeGroup : TreeAgeGroup, species : string, minDistance : real) {

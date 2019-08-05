@@ -14,7 +14,7 @@ namespace SavannaTrees {
 	public class Rafiki : Mars.Interfaces.Environment.GeoCommon.GeoPosition, Mars.Interfaces.Agent.IMarsDslAgent {
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(Rafiki));
-		private readonly Mars.Components.Common.Random _Random = new Mars.Components.Common.Random();
+		private readonly System.Random _Random;
 		private int __DeadSeed
 			 = default(int);
 		public int DeadSeed { 
@@ -381,6 +381,7 @@ namespace SavannaTrees {
 		{
 			_SavannaLayer = _layer;
 			ID = _id;
+			_Random = new System.Random(ID.GetHashCode());
 			this._Precipitation = _Precipitation;
 			this._Temperature = _Temperature;
 			this._TreeRaster = _TreeRaster;
