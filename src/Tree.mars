@@ -212,26 +212,24 @@ agent Tree on SavannaLayer {
 	}
 
 	tick {
-		if(MyTreeAgeGroup !== TreeAgeGroup.Death) {
-			UpdateTreeAgeGroup
-			UpdatePhotosyntheseActive
+		UpdateTreeAgeGroup
+		UpdatePhotosyntheseActive
 			
-			if (MyTreeAgeGroup === TreeAgeGroup.Seed) {
-				Seed
-			} else if (MyTreeAgeGroup === TreeAgeGroup.Seedling) {
-				Seedling
-			} else if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) {
-				Juvenile
-			} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
-				Adult
-			}
+		if (MyTreeAgeGroup === TreeAgeGroup.Seed) {
+			Seed
+		} else if (MyTreeAgeGroup === TreeAgeGroup.Seedling) {
+			Seedling
+		} else if (MyTreeAgeGroup === TreeAgeGroup.Juvenile) {
+			Juvenile
+		} else if (MyTreeAgeGroup === TreeAgeGroup.Adult) {
+			Adult
+		}
 				
-			UpdateWoodMass
+		UpdateWoodMass
 		
-			if (Time::Month(simtime) === 3 and Time::Day(simtime) === 15) {
-				ResetDamageType
-				ResetBarkBy(30)
-			}
+		if (Time::Month(simtime) === 3 and Time::Day(simtime) === 15) {
+			ResetDamageType
+			ResetBarkBy(30)
 		}
 	}
 	
@@ -270,14 +268,18 @@ agent Tree on SavannaLayer {
 		return tempToday < 0 and RandomProbabilitySmallenThan(80)
 	}
 			
-	var seedSurvivedFirst12Days : bool
+	var seedSurvivedFirst12Days : bool 
 	
 	def IsDried() {
-		if (FirstDayAsSeedling + 12 > Time::TotalDays(simtime)) {
+		if (IsWithinFirst12DaysAsSeedling) {
 			seedSurvivedFirst12Days = HasPrecipitation or seedSurvivedFirst12Days
 			return false
 		} 
 		return not seedSurvivedFirst12Days
+	}
+	
+	def IsWithinFirst12DaysAsSeedling() {
+		return FirstDayAsSeedling + 12 > Time::TotalDays(simtime)
 	}
 
 	def HasPrecipitation() {
