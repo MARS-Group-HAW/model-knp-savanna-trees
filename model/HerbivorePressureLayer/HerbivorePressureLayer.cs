@@ -1,5 +1,4 @@
-﻿using System;
-using Mars.Core.SimulationManager.Entities;
+﻿using Mars.Core.SimulationManager.Entities;
 using Mars.Interfaces.Layer;
 using Mars.Interfaces.Layer.Initialization;
 using SavannaTrees;
