@@ -11,14 +11,16 @@ namespace Bushbuckridge.Agents.Collector
     public class HerbivorePressureLayer : ISteppedActiveLayer
     {
         private readonly SavannaLayer _savannaLayer;
+        private readonly int _percentageOfTrees;
         private readonly int _damageMultiplier;
         private int _dayOfTick;
 
         private long CurrentTick { get; set; }
 
-        public HerbivorePressureLayer(SavannaLayer savannaLayer, int damageMultiplier)
+        public HerbivorePressureLayer(SavannaLayer savannaLayer, int percentageOfTrees, int damageMultiplier)
         {
             _savannaLayer = savannaLayer;
+            _percentageOfTrees = percentageOfTrees;
             _damageMultiplier = damageMultiplier;
         }
 
@@ -42,7 +44,7 @@ namespace Bushbuckridge.Agents.Collector
         {
             foreach (var tree in _savannaLayer._TreeAgents.Values)
             {
-                tree.SufferHerbivorePressure(_damageMultiplier);
+                tree.SufferHerbivorePressure(_percentageOfTrees, _damageMultiplier);
             }
         }
 

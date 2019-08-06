@@ -170,8 +170,8 @@ agent Tree on SavannaLayer {
 		}
 	}
 	
-	passive SufferHerbivorePressure(multiplier : integer) {
-		if (RandomProbabilitySmallenThan(30) and (MyTreeAgeGroup === TreeAgeGroup.Juvenile or MyTreeAgeGroup === TreeAgeGroup.Adult)) { 
+	passive SufferHerbivorePressure(percentageOfTrees : integer, multiplier : integer) {
+		if (RandomProbabilitySmallenThan(percentageOfTrees) and (MyTreeAgeGroup === TreeAgeGroup.Juvenile or MyTreeAgeGroup === TreeAgeGroup.Adult)) { 
 			switch (Species) {
 			case AN: { ReduceStemDiameterBy(4 * multiplier) }
 			case CA: { ReduceStemDiameterBy(1 * multiplier) }
