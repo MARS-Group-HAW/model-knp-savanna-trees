@@ -162,7 +162,7 @@ agent Tree on SavannaLayer {
 	}
 	
 	passive SufferDrought() {
-		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7)) { // + random(18)
+		if (MyTreeAgeGroup === TreeAgeGroup.Juvenile and RandomProbabilitySmallenThan(7 + random(8))) {
 			me.Die("Drought")
 		}
 		if (MyTreeAgeGroup === TreeAgeGroup.Seed or MyTreeAgeGroup === TreeAgeGroup.Seedling) {
@@ -170,13 +170,13 @@ agent Tree on SavannaLayer {
 		}
 	}
 	
-	passive SufferHerbivorePressure() {
+	passive SufferHerbivorePressure(multiplier : integer) {
 		if (RandomProbabilitySmallenThan(30) and (MyTreeAgeGroup === TreeAgeGroup.Juvenile or MyTreeAgeGroup === TreeAgeGroup.Adult)) { 
 			switch (Species) {
-			case AN: { ReduceStemDiameterBy(4) }
-			case CA: { ReduceStemDiameterBy(1) }
-			case SB: { ReduceStemDiameterBy(6) }
-			case TT: { ReduceStemDiameterBy(4) } 
+			case AN: { ReduceStemDiameterBy(4 * multiplier) }
+			case CA: { ReduceStemDiameterBy(1 * multiplier) }
+			case SB: { ReduceStemDiameterBy(6 * multiplier) }
+			case TT: { ReduceStemDiameterBy(4 * multiplier) } 
 			}
 		}
 	}

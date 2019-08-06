@@ -1,4 +1,5 @@
-﻿using Mars.Core.SimulationManager.Entities;
+﻿using System;
+using Mars.Core.SimulationManager.Entities;
 using Mars.Interfaces.Layer;
 using Mars.Interfaces.Layer.Initialization;
 using SavannaTrees;
@@ -11,13 +12,15 @@ namespace Bushbuckridge.Agents.Collector
     public class HerbivorePressureLayer : ISteppedActiveLayer
     {
         private readonly SavannaLayer _savannaLayer;
+        private readonly int _damageMultiplier;
         private int _dayOfTick;
 
         private long CurrentTick { get; set; }
 
-        public HerbivorePressureLayer(SavannaLayer savannaLayer)
+        public HerbivorePressureLayer(SavannaLayer savannaLayer, int damageMultiplier)
         {
             _savannaLayer = savannaLayer;
+            _damageMultiplier = damageMultiplier;
         }
 
         public void Tick()
@@ -40,7 +43,7 @@ namespace Bushbuckridge.Agents.Collector
         {
             foreach (var tree in _savannaLayer._TreeAgents.Values)
             {
-                tree.SufferHerbivorePressure();
+                tree.SufferHerbivorePressure(_damageMultiplier);
             }
         }
 
