@@ -327,7 +327,7 @@ namespace SavannaTrees {
 															return DamageType.Moderate
 															;}
 													;} else {
-															if(quota > 0.1) {
+															if(quota > 0.01) {
 																			{
 																			return DamageType.Light
 																			;}
