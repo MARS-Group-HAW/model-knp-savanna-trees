@@ -1,3 +1,6 @@
+using System.Collections.Concurrent;
+using Mars.Common.Collections;
+
 namespace SavannaTrees {
 	using System;
 	using System.Linq;
@@ -69,10 +72,13 @@ namespace SavannaTrees {
 			initData.AgentInitConfigs.First(config => config.Type == typeof(Rafiki)),
 			regHandle, unregHandle, 
 			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster });
-			_TreeAgents = Mars.Components.Services.AgentManager.SpawnAgents<Tree>(
+			_TreeAgents = new Mars.Common.Collections.NonBlockingDictionary.ConcurrentDictionary<System.Guid, Tree>();
+			_TreeAgents.AddRange(
+
+			Mars.Components.Services.AgentManager.SpawnAgents<Tree>(
 			initData.AgentInitConfigs.First(config => config.Type == typeof(Tree)),
 			regHandle, unregHandle, 
-			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster });
+			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster }));
 			
 			this._Register = regHandle;
 			this._Unregister = unregHandle;
