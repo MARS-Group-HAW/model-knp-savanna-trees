@@ -1,4 +1,5 @@
-﻿using Mars.Core.SimulationManager.Entities;
+﻿using System.Linq;
+using Mars.Core.SimulationManager.Entities;
 using Mars.Interfaces.Layer;
 using Mars.Interfaces.Layer.Initialization;
 using SavannaTrees;
@@ -13,15 +14,18 @@ namespace Bushbuckridge.Agents.Collector
         private readonly SavannaLayer _savannaLayer;
         private readonly int _percentageOfTrees;
         private readonly int _damageMultiplier;
+        private readonly int _caAdditionalDamage;
         private int _dayOfTick;
 
         private long CurrentTick { get; set; }
 
-        public HerbivorePressureLayer(SavannaLayer savannaLayer, int percentageOfTrees, int damageMultiplier)
+        public HerbivorePressureLayer(SavannaLayer savannaLayer, int percentageOfTrees, int damageMultiplier, 
+            int caAdditionalDamage = -1)
         {
             _savannaLayer = savannaLayer;
             _percentageOfTrees = percentageOfTrees;
             _damageMultiplier = damageMultiplier;
+            _caAdditionalDamage = caAdditionalDamage;
         }
 
         public void Tick()
@@ -29,7 +33,9 @@ namespace Bushbuckridge.Agents.Collector
             if (_dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
             _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
  
-            if (!IsNextYearTick()) return;
+            if (!IsNextYearTick()) 
+                return;
+            
             fireHerbivorePressureEvent();
         }
 
@@ -45,6 +51,15 @@ namespace Bushbuckridge.Agents.Collector
             foreach (var tree in _savannaLayer._TreeAgents.Values)
             {
                 tree.SufferHerbivorePressure(_percentageOfTrees, _damageMultiplier);
+            }
+            
+            //specific for skukuza, target CA's only
+            if (_caAdditionalDamage != -1)
+            {
+                foreach (var ca in _savannaLayer._TreeAgents.Values.Where(t => t.Species == "ca"))
+                {
+                    ca.SufferHerbivorePressure(_caAdditionalDamage, _damageMultiplier);
+                }
             }
         }
 

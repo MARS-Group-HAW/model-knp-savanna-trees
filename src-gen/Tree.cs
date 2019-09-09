@@ -1264,7 +1264,7 @@ namespace SavannaTrees {
 								if(Equals(_switch175_4176, CA)) {
 									_matched_175_4176 = true;
 									{
-									ReduceStemDiameterBy(1 * multiplier)
+									ReduceStemDiameterBy(3 * multiplier)
 									;}
 								} else {
 									_fallthrough_175_4176 = false;
