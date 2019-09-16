@@ -155,7 +155,7 @@ agent Tree on SavannaLayer {
 			return DamageType.Heavy
 		} else if (quota > 0.3) {
 			return DamageType.Moderate
-		} else if (quota > 0.1) {
+		} else if (quota > 0.01) {
 			return DamageType.Light
 		} 
 		return DamageType.No
@@ -174,7 +174,7 @@ agent Tree on SavannaLayer {
 		if (RandomProbabilitySmallenThan(percentageOfTrees) and (MyTreeAgeGroup === TreeAgeGroup.Juvenile or MyTreeAgeGroup === TreeAgeGroup.Adult)) { 
 			switch (Species) {
 			case AN: { ReduceStemDiameterBy(4 * multiplier) }
-			case CA: { ReduceStemDiameterBy(1 * multiplier) }
+			case CA: { ReduceStemDiameterBy(3 * multiplier) }
 			case SB: { ReduceStemDiameterBy(6 * multiplier) }
 			case TT: { ReduceStemDiameterBy(4 * multiplier) } 
 			}
