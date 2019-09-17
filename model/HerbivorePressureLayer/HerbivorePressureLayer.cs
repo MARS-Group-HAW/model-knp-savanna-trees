@@ -16,16 +16,18 @@ namespace Bushbuckridge.Agents.Collector
         private readonly int _damageMultiplier;
         private readonly int _caAdditionalDamage;
         private int _dayOfTick;
+        private readonly int _juvenilesAdditionalDamage;
 
         private long CurrentTick { get; set; }
 
         public HerbivorePressureLayer(SavannaLayer savannaLayer, int percentageOfTrees, int damageMultiplier, 
-            int caAdditionalDamage = -1)
+            int caAdditionalDamage = -1, int juvenilesAdditionalDamage = -1)
         {
             _savannaLayer = savannaLayer;
             _percentageOfTrees = percentageOfTrees;
             _damageMultiplier = damageMultiplier;
             _caAdditionalDamage = caAdditionalDamage;
+            _juvenilesAdditionalDamage = juvenilesAdditionalDamage;
         }
 
         public void Tick()
@@ -51,6 +53,15 @@ namespace Bushbuckridge.Agents.Collector
             foreach (var tree in _savannaLayer._TreeAgents.Values)
             {
                 tree.SufferHerbivorePressure(_percentageOfTrees, _damageMultiplier);
+            }
+            
+            //specifically target juveniles of all tree types
+            if (_juvenilesAdditionalDamage != -1)
+            {
+                foreach (var tree in _savannaLayer._TreeAgents.Values.Where(t => t.MyTreeAgeGroup == TreeAgeGroup.Juvenile))
+                {
+                    tree.SufferHerbivorePressure(_juvenilesAdditionalDamage, _damageMultiplier);
+                }
             }
             
             //specific for skukuza, target CA's only
