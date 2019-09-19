@@ -43,7 +43,7 @@ namespace SavannaTrees {
 		{
 			if (_bbox.All(d => d.HasValue) && _cellSizeMeters.HasValue) {
 				this._RafikiEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Rafiki>.BuildEnvironment(_bbox[0].Value, _bbox[1].Value, _bbox[2].Value, _bbox[3].Value, _cellSizeMeters.Value);
-				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_bbox[0].Value, _bbox[1].Value, _bbox[2].Value, _bbox[3].Value, 10000);
+				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_bbox[0].Value, _bbox[1].Value, _bbox[2].Value, _bbox[3].Value, 5000);
 			} else
 			{
 				var geometries = new List<GeoAPI.Geometries.IGeometry>();
