@@ -135,6 +135,22 @@ namespace SavannaTrees {
 				if(__GrowedToSeedling != value) __GrowedToSeedling = value;
 			}
 		}
+		private int __JuvBecomeAdu
+			 = default(int);
+		public int JuvBecomeAdu { 
+			get { return __JuvBecomeAdu; }
+			set{
+				if(__JuvBecomeAdu != value) __JuvBecomeAdu = value;
+			}
+		}
+		private int __AduBecomeJuv
+			 = default(int);
+		public int AduBecomeJuv { 
+			get { return __AduBecomeJuv; }
+			set{
+				if(__AduBecomeJuv != value) __AduBecomeJuv = value;
+			}
+		}
 		private int __DT_Light
 			 = default(int);
 		public int DT_Light { 
@@ -171,27 +187,47 @@ namespace SavannaTrees {
 		public void Save(
 		string fact) {
 			{
-			string _switch30_782 = (fact);
-			bool _matched_30_782 = false;
-			bool _fallthrough_30_782 = false;
-			if(!_matched_30_782 || _fallthrough_30_782) {
-				if(Equals(_switch30_782, "SpawnedSeeds")) {
-					_matched_30_782 = true;
+			string _switch32_854 = (fact);
+			bool _matched_32_854 = false;
+			bool _fallthrough_32_854 = false;
+			if(!_matched_32_854 || _fallthrough_32_854) {
+				if(Equals(_switch32_854, "SpawnedSeeds")) {
+					_matched_32_854 = true;
 					{
 					SpawnedSeeds = SpawnedSeeds + 1
 					;}
 				} else {
-					_fallthrough_30_782 = false;
+					_fallthrough_32_854 = false;
 				}
 			}
-			if(!_matched_30_782 || _fallthrough_30_782) {
-				if(Equals(_switch30_782, "GrowedToSeedling")) {
-					_matched_30_782 = true;
+			if(!_matched_32_854 || _fallthrough_32_854) {
+				if(Equals(_switch32_854, "GrowedToSeedling")) {
+					_matched_32_854 = true;
 					{
 					GrowedToSeedling = GrowedToSeedling + 1
 					;}
 				} else {
-					_fallthrough_30_782 = false;
+					_fallthrough_32_854 = false;
+				}
+			}
+			if(!_matched_32_854 || _fallthrough_32_854) {
+				if(Equals(_switch32_854, "JuvBecomeAdu")) {
+					_matched_32_854 = true;
+					{
+					JuvBecomeAdu = JuvBecomeAdu + 1
+					;}
+				} else {
+					_fallthrough_32_854 = false;
+				}
+			}
+			if(!_matched_32_854 || _fallthrough_32_854) {
+				if(Equals(_switch32_854, "AduBecomeJuv")) {
+					_matched_32_854 = true;
+					{
+					AduBecomeJuv = AduBecomeJuv + 1
+					;}
+				} else {
+					_fallthrough_32_854 = false;
 				}
 			}
 			;}
@@ -257,97 +293,97 @@ namespace SavannaTrees {
 														;}
 										;}
 						;};
-			string _switch59_1717 = (fact);
-			bool _matched_59_1717 = false;
-			bool _fallthrough_59_1717 = false;
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "Drought")) {
-					_matched_59_1717 = true;
+			string _switch63_1907 = (fact);
+			bool _matched_63_1907 = false;
+			bool _fallthrough_63_1907 = false;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "Drought")) {
+					_matched_63_1907 = true;
 					{
 					DieDrought = DieDrought + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "RandomProbability")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "RandomProbability")) {
+					_matched_63_1907 = true;
 					{
 					DieRandomProbability = DieRandomProbability + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "PopulationDensity")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "PopulationDensity")) {
+					_matched_63_1907 = true;
 					{
 					DiePopulationDensity = DiePopulationDensity + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "Dried")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "Dried")) {
+					_matched_63_1907 = true;
 					{
 					DieDried = DieDried + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "Damaged")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "Damaged")) {
+					_matched_63_1907 = true;
 					{
 					DieDamaged = DieDamaged + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "Frozen")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "Frozen")) {
+					_matched_63_1907 = true;
 					{
 					DieFrozen = DieFrozen + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "DeathZone")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "DeathZone")) {
+					_matched_63_1907 = true;
 					{
 					DieDeathZone = DieDeathZone + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "PushOver")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "PushOver")) {
+					_matched_63_1907 = true;
 					{
 					DiePushOver = DiePushOver + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
-			if(!_matched_59_1717 || _fallthrough_59_1717) {
-				if(Equals(_switch59_1717, "RoundBarked")) {
-					_matched_59_1717 = true;
+			if(!_matched_63_1907 || _fallthrough_63_1907) {
+				if(Equals(_switch63_1907, "RoundBarked")) {
+					_matched_63_1907 = true;
 					{
 					DieRoundBarked = DieRoundBarked + 1
 					;}
 				} else {
-					_fallthrough_59_1717 = false;
+					_fallthrough_63_1907 = false;
 				}
 			}
 			;}
@@ -410,6 +446,8 @@ namespace SavannaTrees {
 			DieDeathZone = 0;
 			SpawnedSeeds = 0;
 			GrowedToSeedling = 0;
+			JuvBecomeAdu = 0;
+			AduBecomeJuv = 0;
 			DT_Light = 0;
 			DT_Moderate = 0;
 			DT_Heavy = 0;
