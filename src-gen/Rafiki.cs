@@ -439,6 +439,7 @@ namespace SavannaTrees {
 			DiePopulationDensity = 0;
 			DieDried = 0;
 			DiePushOver = 0;
+			DieRoundBarked = 0;
 			DieDrought = 0;
 			DieDamaged = 0;
 			DieFrozen = 0;
