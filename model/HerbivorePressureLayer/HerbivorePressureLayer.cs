@@ -18,11 +18,13 @@ namespace Bushbuckridge.Agents.Collector
         private int _dayOfTick;
         private readonly int _juvenilesAdditionalDamage;
         private readonly int _ttJuvenileAdditionalDamage;
+        private readonly int _caJuvenileAdditionalDamage;
 
         private long CurrentTick { get; set; }
 
         public HerbivorePressureLayer(SavannaLayer savannaLayer, int percentageOfTrees, int damageMultiplier, 
-            int caAdditionalDamage = -1, int juvenilesAdditionalDamage = -1, int ttJuvenileAdditionalDamage = -1)
+            int caAdditionalDamage = -1, int juvenilesAdditionalDamage = -1, int ttJuvenileAdditionalDamage = -1,
+            int caJuvenileAdditionalDamage = -1)
         {
             _savannaLayer = savannaLayer;
             _percentageOfTrees = percentageOfTrees;
@@ -30,6 +32,7 @@ namespace Bushbuckridge.Agents.Collector
             _caAdditionalDamage = caAdditionalDamage;
             _juvenilesAdditionalDamage = juvenilesAdditionalDamage;
             _ttJuvenileAdditionalDamage = ttJuvenileAdditionalDamage;
+            _caJuvenileAdditionalDamage = caJuvenileAdditionalDamage;
         }
 
         public void Tick()
@@ -81,6 +84,15 @@ namespace Bushbuckridge.Agents.Collector
                     t => t.Species == "tt" && t.MyTreeAgeGroup == TreeAgeGroup.Juvenile))
                 {
                     tree.SufferHerbivorePressure(_ttJuvenileAdditionalDamage, _damageMultiplier);
+                }
+            }
+            
+            if (_caJuvenileAdditionalDamage != -1)
+            {
+                foreach (var tree in _savannaLayer._TreeAgents.Values.Where(
+                    t => t.Species == "ca" && t.MyTreeAgeGroup == TreeAgeGroup.Juvenile))
+                {
+                    tree.SufferHerbivorePressure(_caJuvenileAdditionalDamage, _damageMultiplier);
                 }
             }
         }
