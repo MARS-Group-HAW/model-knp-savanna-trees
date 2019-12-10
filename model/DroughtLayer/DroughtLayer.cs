@@ -34,7 +34,7 @@ namespace Bushbuckridge.Agents.Collector
         {
             if (_dayOfTick.Equals(SimulationClock.CurrentTimePoint.Value.Day)) return;
             _dayOfTick = SimulationClock.CurrentTimePoint.Value.Day;
-            _precipitationWithinYear += _precipitation.GetNumberValue(Territory.TOP_LAT, Territory.LEFT_LONG);
+            _precipitationWithinYear += _precipitation.GetNumberValue(Territory.LEFT_LONG, Territory.TOP_LAT);
 
             if (!IsNextYearTick()) return;
 

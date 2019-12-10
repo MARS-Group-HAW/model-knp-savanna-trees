@@ -318,7 +318,7 @@ agent Tree on SavannaLayer {
 	
 	def SpawnSeeds() {
 		for (var i = 0; i < SeedSpawnRatePerYear; i++) {
-			var seed = spawn Tree at GetRelativePosition(ycor, xcor, random(360), random(50))
+			var seed = spawn Tree at GetRelativePosition(xcor, ycor, random(360), random(50))
 			seed.SetSpecies(Species)	
 			
 			var raster = treeRaster.GetIntegerValue(seed.Xcor, seed.Ycor)

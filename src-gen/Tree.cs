@@ -635,7 +635,7 @@ namespace SavannaTrees {
 					 i++){
 					 	{
 					 	SavannaTrees.Tree seed = new System.Func<SavannaTrees.Tree>(() => {
-					 	var _target321_7767 = GetRelativePosition(this.Position.Y,this.Position.X,_Random.Next(360),
+					 	var _target321_7767 = GetRelativePosition(this.Position.X,this.Position.Y,_Random.Next(360),
 					 	_Random.Next(50)
 					 	);
 					 	return _SavannaLayer._SpawnTree(_target321_7767.Item1, _target321_7767.Item2);}).Invoke();
