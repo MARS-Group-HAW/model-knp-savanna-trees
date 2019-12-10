@@ -49,7 +49,7 @@ agent Tree on SavannaLayer {
 	var FirstDayAsSeedling : real
 	
 	def TreePosition() => return #(xcor, ycor)
-		
+	
 	initialize {
 		MyTreeAgeGroup = TreeAgeGroup.Seed
 		MyDamageType = DamageType.No

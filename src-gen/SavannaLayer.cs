@@ -2,38 +2,68 @@ namespace SavannaTrees {
 	using System;
 	using System.Linq;
 	using System.Collections.Generic;
-	// ReSharper disable All
+	// Pragma and ReSharper disable all warnings for generated code
 	#pragma warning disable 162
 	#pragma warning disable 219
+	#pragma warning disable 169
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "InconsistentNaming")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "UnusedParameter.Local")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "RedundantNameQualifier")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "MemberInitializerValueIgnored")]
 	[System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "RedundantCheckBeforeAssignment")]
 	public class SavannaLayer : Mars.Components.Layers.AbstractLayer {
 		private static readonly Mars.Common.Logging.ILogger _Logger = 
 					Mars.Common.Logging.LoggerFactory.GetLogger(typeof(SavannaLayer));
-		private readonly System.Random _Random;
+		private readonly System.Random _Random = new System.Random();
 		public Mars.Interfaces.Layer.UnregisterAgent _Unregister { get; set; }
 		public Mars.Interfaces.Layer.RegisterAgent _Register { get; set; }
-		private double?[] _bbox = new double?[4]; private int? _cellSizeMeters;
-		public Mars.Components.Environments.GeoGridHashEnvironment<Rafiki> _RafikiEnvironment { get; set; }
-		public Mars.Components.Environments.GeoGridHashEnvironment<Tree> _TreeEnvironment { get; set; }
+		public Mars.Mathematics.SpaceDistanceMetric _DistanceMetric { get; set; } = Mars.Mathematics.SpaceDistanceMetric.Euclidean;
+		private double _minLon;
+		private double _minLat;
+		private double _maxLon;
+		private double _maxLat;
+		private bool _isDefault;
+		private int? _cellSizeMeters;
+		private Mars.Interfaces.Environment.Position _lowerLeft;
+		private Mars.Interfaces.Environment.Position _upperRight;
+		private Mars.Interfaces.Environment.Position _lowerRight;
+		private Mars.Interfaces.Environment.Position _upperLeft;
+		public double MinLon() => _minLon;
+		public double MinLat() => _minLat;
+		public double MaxLon() => _maxLon;
+		public double MaxLat() => _maxLat;
+		
+		public Mars.Components.Environments.GeoHashEnvironment<Rafiki> _RafikiEnvironment { get; set; }
+		public Mars.Components.Environments.GeoHashEnvironment<Tree> _TreeEnvironment { get; set; }
 		public Precipitation _Precipitation { get; set; }
 		public Temperature _Temperature { get; set; }
 		public TreeRaster _TreeRaster { get; set; }
 		public System.Collections.Generic.IDictionary<System.Guid, Rafiki> _RafikiAgents { get; set; }
 		public System.Collections.Generic.IDictionary<System.Guid, Tree> _TreeAgents { get; set; }
+		
 		public SavannaLayer _SavannaLayer => this;
 		public SavannaLayer (
 		Precipitation _precipitation, Temperature _temperature, TreeRaster _treeraster, 
-		double? topLatitude = null, double? bottomLatitude = null, double? leftLatitude = null, double? rightLatitude = null, int? cellSizeMeters = null) {
+		double? minLon = null, double? minLat = null,
+		double? maxLon = null, double? maxLat = null,
+		int? cellSizeMeters = null
+		) {
 			this._Precipitation = _precipitation;
 			this._Temperature = _temperature;
 			this._TreeRaster = _treeraster;
-			_bbox[0] = topLatitude;_bbox[1] = bottomLatitude;_bbox[2] = leftLatitude;_bbox[3] = rightLatitude;
+			_minLon = minLon ?? 0;
+			_minLat = minLat ?? 0;
+			_maxLon = maxLon ?? 1;
+			_maxLat = maxLat ?? 1;
 			_cellSizeMeters = cellSizeMeters;
+			_isDefault = (minLon == null && minLat == null && maxLon == null && maxLat == null);
+			_lowerLeft = Mars.Interfaces.Environment.Position.CreateGeoPosition(_minLon, _minLat);
+			_upperRight = Mars.Interfaces.Environment.Position.CreateGeoPosition(_maxLon, _maxLat);
+			_upperLeft = Mars.Interfaces.Environment.Position.CreateGeoPosition(_minLon, _maxLat);
+			_lowerRight = Mars.Interfaces.Environment.Position.CreateGeoPosition(_maxLon, _minLat);
 		}
 		
 		public override bool InitLayer(
@@ -41,28 +71,47 @@ namespace SavannaTrees {
 			Mars.Interfaces.Layer.RegisterAgent regHandle, 
 			Mars.Interfaces.Layer.UnregisterAgent unregHandle)
 		{
-			if (_bbox.All(d => d.HasValue) && _cellSizeMeters.HasValue) {
-				this._RafikiEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Rafiki>.BuildEnvironment(_bbox[0].Value, _bbox[1].Value, _bbox[2].Value, _bbox[3].Value, _cellSizeMeters.Value);
-				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_bbox[0].Value, _bbox[1].Value, _bbox[2].Value, _bbox[3].Value, 5000);
-			} else
+			base.InitLayer(initData, regHandle, unregHandle);
+			this._Register = regHandle;
+			this._Unregister = unregHandle;
+			
+			_DistanceMetric = Mars.Mathematics.SpaceDistanceMetric.Chebyshev;
+			var _gisLayerExist = true;
+			if (!_isDefault && _lowerLeft != null && _upperRight != null) {
+				this._RafikiEnvironment = Mars.Components.Environments.GeoHashEnvironment<Rafiki>.BuildByBBox(_lowerLeft.Longitude, _lowerLeft.Latitude, _upperRight.Longitude, _upperRight.Latitude);
+				this._TreeEnvironment = Mars.Components.Environments.GeoHashEnvironment<Tree>.BuildByBBox(_lowerLeft.Longitude, _lowerLeft.Latitude, _upperRight.Longitude, _upperRight.Latitude);
+			} else if (_gisLayerExist)
 			{
 				var geometries = new List<GeoAPI.Geometries.IGeometry>();
 				var _factory = new NetTopologySuite.Utilities.GeometricShapeFactory();
-				_factory.Base = new GeoAPI.Geometries.Coordinate(this._Precipitation.Metadata.LowerLeftBound.Longitude, this._Precipitation.Metadata.LowerLeftBound.Latitude);
-				_factory.Height = this._Precipitation.Metadata.CellSizeInDegree * this._Precipitation.Metadata.HeightInGridCells;
-				_factory.Width = this._Precipitation.Metadata.CellSizeInDegree * this._Precipitation.Metadata.WidthInGridCells;
+				_factory.Base = new GeoAPI.Geometries.Coordinate(this._Precipitation.LowerLeft.Longitude, this._Precipitation.LowerLeft.Latitude);
+				_factory.Height = this._Precipitation.CellHeight * this._Precipitation.Height;
+				_factory.Width = this._Precipitation.CellWidth * this._Precipitation.Width;
 				geometries.Add(_factory.CreateRectangle());
-				_factory.Base = new GeoAPI.Geometries.Coordinate(this._Temperature.Metadata.LowerLeftBound.Longitude, this._Temperature.Metadata.LowerLeftBound.Latitude);
-				_factory.Height = this._Temperature.Metadata.CellSizeInDegree * this._Temperature.Metadata.HeightInGridCells;
-				_factory.Width = this._Temperature.Metadata.CellSizeInDegree * this._Temperature.Metadata.WidthInGridCells;
+				_factory.Base = new GeoAPI.Geometries.Coordinate(this._Temperature.LowerLeft.Longitude, this._Temperature.LowerLeft.Latitude);
+				_factory.Height = this._Temperature.CellHeight * this._Temperature.Height;
+				_factory.Width = this._Temperature.CellWidth * this._Temperature.Width;
 				geometries.Add(_factory.CreateRectangle());
-				_factory.Base = new GeoAPI.Geometries.Coordinate(this._TreeRaster.Metadata.LowerLeftBound.Longitude, this._TreeRaster.Metadata.LowerLeftBound.Latitude);
-				_factory.Height = this._TreeRaster.Metadata.CellSizeInDegree * this._TreeRaster.Metadata.HeightInGridCells;
-				_factory.Width = this._TreeRaster.Metadata.CellSizeInDegree * this._TreeRaster.Metadata.WidthInGridCells;
+				_factory.Base = new GeoAPI.Geometries.Coordinate(this._TreeRaster.LowerLeft.Longitude, this._TreeRaster.LowerLeft.Latitude);
+				_factory.Height = this._TreeRaster.CellHeight * this._TreeRaster.Height;
+				_factory.Width = this._TreeRaster.CellWidth * this._TreeRaster.Width;
 				geometries.Add(_factory.CreateRectangle());
-				var _feature = new NetTopologySuite.Geometries.GeometryCollection(geometries.ToArray()).Envelope;
-				this._RafikiEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Rafiki>.BuildEnvironment(_feature.Coordinates[1].Y, _feature.Coordinates[0].Y, _feature.Coordinates[0].X, _feature.Coordinates[2].X, _cellSizeMeters ?? 100);
-				this._TreeEnvironment = Mars.Components.Environments.GeoGridHashEnvironment<Tree>.BuildEnvironment(_feature.Coordinates[1].Y, _feature.Coordinates[0].Y, _feature.Coordinates[0].X, _feature.Coordinates[2].X, _cellSizeMeters ?? 100);
+				var _feature = new NetTopologySuite.Geometries.GeometryCollection(geometries.ToArray()).EnvelopeInternal;
+				_minLon = _feature.MinX;
+				_minLat = _feature.MinY;
+				_maxLon = _feature.MaxX;
+				_maxLat = _feature.MaxY;
+				
+				this._RafikiEnvironment = Mars.Components.Environments.GeoHashEnvironment<Rafiki>
+					.BuildByBBox(_feature.MinX, _feature.MinY, _feature.MaxX, _feature.MaxY);
+				this._TreeEnvironment = Mars.Components.Environments.GeoHashEnvironment<Tree>
+					.BuildByBBox(_feature.MinX, _feature.MinY, _feature.MaxX, _feature.MaxY);
+			} 
+			else if (_lowerLeft != null && _upperRight != null) {
+				this._RafikiEnvironment = Mars.Components.Environments.GeoHashEnvironment<Rafiki>.BuildByBBox(_lowerLeft.Longitude, _lowerLeft.Latitude, _upperRight.Longitude, _upperRight.Latitude);
+				this._TreeEnvironment = Mars.Components.Environments.GeoHashEnvironment<Tree>.BuildByBBox(_lowerLeft.Longitude, _lowerLeft.Latitude, _upperRight.Longitude, _upperRight.Latitude);
+			} else {
+				throw new ArgumentException("No environment boundary was used for agent layer 'TestLayer'");
 			}
 			
 			_RafikiAgents = Mars.Components.Services.AgentManager.SpawnAgents<Rafiki>(
@@ -74,9 +123,7 @@ namespace SavannaTrees {
 			regHandle, unregHandle, 
 			new System.Collections.Generic.List<Mars.Interfaces.Layer.ILayer> { this, this._Precipitation, this._Temperature, this._TreeRaster });
 			
-			this._Register = regHandle;
-			this._Unregister = unregHandle;
-			return base.InitLayer(initData, regHandle, unregHandle);
+			return true;
 		}
 		
 		[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
