@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mars.Life.Simulations" Version="4.1.8" />
+    <PackageReference Include="Mars.Life.Simulations" Version="4.1.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src-gen\SavannaTrees.csproj" />
